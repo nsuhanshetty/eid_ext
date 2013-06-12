@@ -1,0 +1,4 @@
+1. collect the db info from the app.config using <connection string> (mysqlconn.cs)
+2. Edit the message for the error dump files.
+3. Modify the header in login.
+4. Stored procedures instead of query.

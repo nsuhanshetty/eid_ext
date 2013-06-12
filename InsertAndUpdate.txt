@@ -1,0 +1,35 @@
+////insert
+
+
+ //qry = "insert into employee_registry(ER_EMP_NO,ER_EMP_NAME,ER_FATHER_NAME,ER_EMP_DOB,ER_EMP_READ,ER_EMP_WRITE,ER_EMP_SPEAK,ER_EMP_PER_ADDRESS,ER_EMP_PRES_ADDRESS,ER_EMP_PHONE_NO,ER_EMP_MOBILE_NO,ER_EMP_EDU_QUAL,ER_EMP_OTHR_QUAL,ER_EMP_EXPERIENCE_SEC_SER,ER_REF1_NAME,ER_REF1_HOUSE_NO,ER_REF1_STREET_NO,ER_REF1_POST_OFFICE,ER_REF1_DISTRICT,ER_REF1_STATE,ER_REF1_TELEPHONE,ER_REF1_PINCODE,ER_REF1_OCCUPATION,ER_REF2_NAME,ER_REF2_HOUSE_NO,ER_REF2_STREET_NO,ER_REF2_POST_OFFICE,ER_REF2_DISTRICT,ER_REF2_STATE,ER_REF2_TELEPHONE,ER_REF2_PINCODE,ER_REF2_OCCUPATION,ER_EMP_ABOUT,ER_EMP_MARITAL_STATUS,ER_EMP_DOM,ER_WIFE_NAME,ER_EMP_NOCHILD,ER_CREATED_BY,ER_CREATED_ON) values ('" + txtEmpNo.Text + "','" + txtName.Text + "','" + txtFthrName.Text + "','" + dtpDob.Value.ToString("yyyy-MM-dd") + "','" + txtRead.Text + "','" + txtWrite.Text + "','" + txtSpeak.Text + "','" + txtPermAdd.Text + "','" + txtPresAdd.Text + "','" + txtPhoneNo.Text + "','" + txtMobNo.Text + "','" + txtEduQual.Text + "','" + txtOthrQual.Text + "','" + txtExpInSec.Text + "','" + txtNameRef1.Text + "','" + txtHouseNoRef1.Text + "','" + txtStreetNoRef1.Text + "','" + txtPostOffRef1.Text + "','" + txtDistRef1.Text + "','" + txtStateRef1.Text + "','" + txtTeleRef1.Text + "','" + txtPincodeRef1.Text + "','" + txtOccRef1.Text + "','" + txtNameRef2.Text + "','" + txtHouseNoRef2.Text + "','" + txtStreetNoRef2.Text + "','" + txtPostOffRef2.Text + "','" + txtDistRef2.Text + "','" + txtStateRef2.Text + "','" + txtTeleRef2.Text + "','" + txtPincodeRef2.Text + "','" + txtOccRef2.Text + "','" + txtAbout.Text + "',";
+
+//  qry += "'single', NULL , NULL , NULL,";
+
+
+//qry += "'Married','" + dtpDom.Value.ToString("yyyy-MM-dd") + "','" + txtWifeName.Text + "','" + txtNoOfChild.Text + "',";
+
+
+ //    qry += com.qrytime("ins");
+             //   qry += ")";
+
+
+// if (MysqlConn.executeQry(qry) >= 1)
+
+/////update
+
+//update
+//qry = "update employee_registry set ER_EMP_NAME='" + txtName.Text + "',ER_FATHER_NAME='" + txtFthrName.Text + "',ER_EMP_DOB='" + dtpDob.Value.ToString("yyyy-MM-dd") + "',ER_EMP_READ='" + txtRead.Text + "',ER_EMP_WRITE='" + txtWrite.Text + "',ER_EMP_SPEAK='" + txtSpeak.Text + "',ER_EMP_PER_ADDRESS='" + txtPermAdd.Text + "',ER_EMP_PRES_ADDRESS='" + txtPresAdd.Text + "',ER_EMP_PHONE_NO='" + txtPhoneNo.Text + "',ER_EMP_MOBILE_NO='" + txtMobNo.Text + "',ER_EMP_EDU_QUAL='" + txtEduQual.Text + "',ER_EMP_OTHR_QUAL='" + txtOthrQual.Text + "',ER_EMP_EXPERIENCE_SEC_SER='" + txtExpInSec.Text + "',ER_REF1_NAME='" + txtNameRef1.Text + "',ER_REF1_HOUSE_NO='" + txtHouseNoRef1.Text + "',ER_REF1_STREET_NO='" + txtStreetNoRef1.Text + "',ER_REF1_POST_OFFICE='" + txtPostOffRef1.Text + "',ER_REF1_DISTRICT='" + txtDistRef1.Text + "',ER_REF1_STATE='" + txtStateRef1.Text + "',ER_REF1_TELEPHONE='" + txtTeleRef1.Text + "',ER_REF1_PINCODE='" + txtPincodeRef1.Text + "',ER_REF1_OCCUPATION='" + txtOccRef1.Text + "',ER_REF2_NAME='" + txtNameRef2.Text + "',ER_REF2_HOUSE_NO='" + txtHouseNoRef2.Text + "',ER_REF2_STREET_NO='" + txtStreetNoRef2.Text + "',ER_REF2_POST_OFFICE='" + txtPostOffRef2.Text + "',ER_REF2_DISTRICT='" + txtDistRef2.Text + "',ER_REF2_STATE='" + txtStateRef2.Text + "',ER_REF2_TELEPHONE='" + txtTeleRef2.Text + "',ER_REF2_PINCODE='" + txtPincodeRef2.Text + "',ER_REF2_OCCUPATION='" + txtOccRef2.Text + "',ER_EMP_ABOUT='" + txtAbout.Text + "',ER_MODIFIED_BY='" + User.UserId + "',ER_MODIFIED_ON='" + DateTime.Now.ToString("yyyy-MM-dd") + "',";
+
+
+ if (rdbMarried.Checked == true)
+                {
+                    qry += "ER_EMP_MARITAL_STATUS='Married',ER_EMP_DOM='" + dtpDom.Value.ToString("yyyy-MM-dd") + "',ER_WIFE_NAME='" + txtWifeName.Text + "',ER_EMP_NOCHILD='" + txtNoOfChild.Text + "'";
+                }
+                else
+                {
+                    qry += "ER_EMP_MARTIAL_STATUS='Single',ER_EMP_DOM=NULL,ER_WIFE_NAME=NULL,ER_EMP_NOCHILD=NULL";
+                }
+
+                qry += " where ER_EMP_NO='" + txtEmpNo.Text + "'";
+
+  if (MysqlConn.executeQry(qry) >= 1)

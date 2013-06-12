@@ -1,0 +1,29 @@
+//  try
+//  {
+
+
+//}
+                    //catch (Exception)
+                    //{
+                    //    qry = "delete from employee_registry where ER_EMP_NO='" + txtEmpNo.Text + "'";
+                    //    MysqlConn.executeQry(qry);
+
+                    //    qry = "delete  from employee_proof where ER_EMP_NO='" + txtEmpNo.Text + "'";
+                    //    MysqlConn.executeQry(qry);
+
+                    //    if (File.Exists(DobPath + "\\ _DobPath_" + val + DOBext))
+                    //        File.Delete(DobPath + "\\ _DobPath_" + val + DOBext);
+                    //    if (File.Exists(PermAddPath + "\\ _PermAddpath_" + val + PermAddext))
+                    //        File.Delete(PermAddPath + "\\ _PermAddpath_" + val + PermAddext);
+                    //    if (File.Exists(PresAddPath + "\\ _PresAddPath_" + val + PresAddext))
+                    //        File.Delete(PresAddPath + "\\ _PresAddPath_" + val + PresAddext);
+                    //    if (File.Exists(EduQualPath + "\\ _EduQualPath_" + val + EduQualext))
+                    //        File.Delete(EduQualPath + "\\ _EduQualPath_" + val + EduQualext);
+                    //    if (File.Exists(OthrQualPath + "\\ _OthrQualPath_" + val + OthrQualext))
+                    //        File.Delete(OthrQualPath + "\\ _OthrQualPath_" + val + OthrQualext);
+                    //    if (File.Exists(NoChildPath + "\\ _NoChildPath_" + val + NOChildext))
+                    //        File.Delete(NoChildPath + "\\ _NoChildPath_" + val + NOChildext);
+
+                    //    MessageBox.Show("Enter valid proof path", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //    return;
+                    //}
