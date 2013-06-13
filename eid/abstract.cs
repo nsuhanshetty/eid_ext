@@ -84,6 +84,7 @@ namespace eid
             frm.btnnew.Enabled = value;
             frm.btnmodify.Enabled = value;
             frm.btndelete.Enabled = value;
+            frm.btnPrint.Enabled = value;
 
             frm.btnsave.Enabled = (!value);
             frm.btncancel.Enabled = (!value);
@@ -91,14 +92,29 @@ namespace eid
             frm.NewToolStripMenuItem.Enabled = value;
             frm.ModifyToolStripMenuItem.Enabled = value;
             frm.DeleteToolStripMenuItem.Enabled = value;
+            frm.PrintToolStripMenuItem.Enabled = value;
             MenuState= value;
-        }
-
-        #endregion 'Public Methods
+        }       
 
         protected virtual void btnexit_Click(object sender, EventArgs e)
         {
 
         }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected virtual void Biodata_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected virtual void iDCard_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion 'Public Methods
     }
 }

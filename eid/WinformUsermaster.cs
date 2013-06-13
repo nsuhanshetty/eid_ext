@@ -56,6 +56,8 @@ namespace eid
 
         private void WinformUsermaster_Load(object sender, EventArgs e)
         {
+            btnPrint.Visible = false;
+            
            // LOADCHECKBX();
             pnlUsrNew.Visible = false;
             pnlUsrView.Visible = false;

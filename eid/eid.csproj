@@ -11,7 +11,8 @@
     <RootNamespace>eid</RootNamespace>
     <AssemblyName>eid</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -97,7 +98,7 @@
     <Compile Include="abstract.designer.cs">
       <DependentUpon>abstract.cs</DependentUpon>
     </Compile>
-    <Compile Include="BioData.cs">
+    <Compile Include="Report\BioData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BioData.rpt</DependentUpon>
@@ -163,7 +164,7 @@
     <EmbeddedResource Include="abstract.resx">
       <DependentUpon>abstract.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BioData.rpt">
+    <EmbeddedResource Include="Report\BioData.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>BioData.cs</LastGenOutput>
     </EmbeddedResource>

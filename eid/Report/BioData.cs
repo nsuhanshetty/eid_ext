@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace eid {
+namespace eid.Report {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -41,7 +41,7 @@ namespace eid {
         
         public override string FullResourceName {
             get {
-                return "eid.BioData.rpt";
+                return "eid.Report.BioData.rpt";
             }
             set {
                 // Do nothing

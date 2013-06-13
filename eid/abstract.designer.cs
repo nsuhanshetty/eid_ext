@@ -47,8 +47,8 @@
             this.NormalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HorizontalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.printAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.iDCardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripBiodata = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripIDCard = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnnew = new System.Windows.Forms.ToolStripButton();
             this.btnmodify = new System.Windows.Forms.ToolStripButton();
@@ -208,23 +208,25 @@
             // printToolStripMenuItem1
             // 
             this.printToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.printAsToolStripMenuItem,
-            this.iDCardToolStripMenuItem});
+            this.ToolStripBiodata,
+            this.ToolStripIDCard});
             this.printToolStripMenuItem1.Name = "printToolStripMenuItem1";
             this.printToolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
             this.printToolStripMenuItem1.Text = "&Print";
             // 
-            // printAsToolStripMenuItem
+            // ToolStripBiodata
             // 
-            this.printAsToolStripMenuItem.Name = "printAsToolStripMenuItem";
-            this.printAsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            this.printAsToolStripMenuItem.Text = "&Biodata";
+            this.ToolStripBiodata.Name = "ToolStripBiodata";
+            this.ToolStripBiodata.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripBiodata.Text = "&Biodata";
+            this.ToolStripBiodata.Click += new System.EventHandler(this.Biodata_Click);
             // 
-            // iDCardToolStripMenuItem
+            // ToolStripIDCard
             // 
-            this.iDCardToolStripMenuItem.Name = "iDCardToolStripMenuItem";
-            this.iDCardToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            this.iDCardToolStripMenuItem.Text = "&I D Card";
+            this.ToolStripIDCard.Name = "ToolStripIDCard";
+            this.ToolStripIDCard.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripIDCard.Text = "&I D Card";
+            this.ToolStripIDCard.Click += new System.EventHandler(this.iDCard_Click);
             // 
             // ToolStrip1
             // 
@@ -286,6 +288,7 @@
             this.btnPrint.Size = new System.Drawing.Size(36, 51);
             this.btnPrint.Text = "Print";
             this.btnPrint.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
             // btnInfo
             // 
@@ -409,8 +412,8 @@
         protected internal System.Windows.Forms.ToolStripButton btncancel;
         protected internal System.Windows.Forms.ToolStripButton btnexit;
         private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem printAsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem iDCardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripBiodata;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripIDCard;
         private System.Windows.Forms.StatusStrip StatusStrip;
         private System.Windows.Forms.ToolStripStatusLabel StatusStripLabel;
     }

@@ -8,6 +8,8 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using System.Configuration;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
 
 namespace eid
 {
@@ -15,11 +17,13 @@ namespace eid
     {
         #region 'PropertiesAndVariables
         string qry = "",EmpPicext,DOBext,NOChildext,PermAddext,PresAddext,EduQualext,OthrQualext;
-        string ext;
+        
         Common com = new Common();
+        ErrorDump ed = new ErrorDump();
         DataTable dt = new DataTable();
+
         MySql.Data.MySqlClient.MySqlDataReader myReader = null;
-        MysqlConn objData = new MysqlConn();
+        
         WinformAbstract wfAbs = new WinformAbstract();
         WinformMainmenu wfMain = new WinformMainmenu();
 
@@ -56,14 +60,28 @@ namespace eid
                 _update = value;
             }
         }
-#endregion 'PropertiesAndVariables
+
+        private bool mPrint;
+        private bool PrintState
+        {
+            get
+            {
+                return mPrint;
+            }
+            set
+            {
+                mPrint = value;
+            }
+        }
+
+        #endregion 'PropertiesAndVariables
+
+         #region 'PrivateAndProtectedmethods
 
         public WinformEmpReg()
         {
             InitializeComponent();
         }
-
-        #region 'PrivateAndProtectedmethods
 
         private void WinformStaffDetail_Load(object sender, EventArgs e)
         {
@@ -75,7 +93,6 @@ namespace eid
            // dgvView.Size = new Size(785,450);
             this.Size = new Size(785, 683);
                         
-
             if (!Directory.Exists(EmpPicPath))
                 Directory.CreateDirectory(EmpPicPath);
             if (!Directory.Exists(DobPath))
@@ -388,6 +405,55 @@ namespace eid
 
             MenuMode(this, true);
             tabControl1.Visible = false;
+        }
+
+        protected override void Biodata_Click(object sender, EventArgs e)
+        {
+            DeleteState = false;
+            PrintState=true;
+            txtSrchEmpName.Text = "";
+            this.tabControl1.Visible = false;
+            this.pnlUsrView.Visible = true;
+
+            lblMessage.Text = "Double Click the Username to Print the User Data.";
+
+            //load the datagrid 
+            LoadDGV();
+            try
+            {
+                //load dataset
+                ReportDocument rptDoc = new ReportDocument();
+                dsBiodata ds = new dsBiodata();
+                DataTable dt = new DataTable();
+                
+                if (string.IsNullOrEmpty(txtEmpNo.))                        
+                dt=MysqlConn.getDataTable("Select * from employee_details where ED_EMP_NO='" + txtEmpNo.Text + "'");
+                ds.Tables[0].Merge(dt);
+
+                // load report to rptdoc
+                rptDoc.Load("Reports/BioData.rpt");
+
+                //set dataset to the report viewer.
+                rptDoc.SetDataSource(ds);
+
+                //convert rpt to pdf            
+                ExportOptions CrExportOptions;
+                DiskFileDestinationOptions CrDiskFileDestinationOptions = new DiskFileDestinationOptions();
+                PdfRtfWordFormatOptions CrFormatTypeOptions = new PdfRtfWordFormatOptions();
+                CrDiskFileDestinationOptions.DiskFileName = "Reports/Biodata.pdf";
+                CrExportOptions = rptDoc.ExportOptions;//Report document  object has to be given here
+                CrExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
+                CrExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
+                CrExportOptions.DestinationOptions = CrDiskFileDestinationOptions;
+                CrExportOptions.FormatOptions = CrFormatTypeOptions;
+                rptDoc.Export();
+
+            }
+            catch (Exception ex)
+            {
+                ed.WriteToErrorLog(ErrorDump.ErrorDumpErrorLogType.Critical, ex, "Crystal Report Error");
+            }
+            //open pdf in webbrowser
         }
 
         protected override void btnexit_Click(object sender, EventArgs e)
