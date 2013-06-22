@@ -476,7 +476,6 @@
             this.grbMaritalStatus.Size = new System.Drawing.Size(151, 28);
             this.grbMaritalStatus.TabIndex = 81;
             this.grbMaritalStatus.TabStop = false;
-            this.grbMaritalStatus.MouseUp += new System.Windows.Forms.MouseEventHandler(this.grbMarital_Enter);
             // 
             // rdbSingle
             // 

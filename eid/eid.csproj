@@ -143,6 +143,12 @@
     <Compile Include="WinformMainmenu.designer.cs">
       <DependentUpon>WinformMainmenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="WinformPdfViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinformPdfViewer.Designer.cs">
+      <DependentUpon>WinformPdfViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="WinformStaffDetail.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -189,6 +195,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WinformMainmenu.resx">
       <DependentUpon>WinformMainmenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinformPdfViewer.resx">
+      <DependentUpon>WinformPdfViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinformStaffDetail.resx">
       <DependentUpon>WinformStaffDetail.cs</DependentUpon>

@@ -29,36 +29,36 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.grbMaritalStatus = new System.Windows.Forms.GroupBox();
+            this.grbPrintOpt = new System.Windows.Forms.GroupBox();
             this.rdbBiodata = new System.Windows.Forms.RadioButton();
             this.rdbIdCard = new System.Windows.Forms.RadioButton();
             this.lblSelectOpt = new System.Windows.Forms.Label();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.WebBrows = new System.Windows.Forms.WebBrowser();
             this.btnPrint = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
-            this.grbMaritalStatus.SuspendLayout();
+            this.grbPrintOpt.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.panel1.Controls.Add(this.grbMaritalStatus);
+            this.panel1.Controls.Add(this.grbPrintOpt);
             this.panel1.Controls.Add(this.lblSelectOpt);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(727, 43);
             this.panel1.TabIndex = 0;
             // 
-            // grbMaritalStatus
+            // grbPrintOpt
             // 
-            this.grbMaritalStatus.Controls.Add(this.rdbBiodata);
-            this.grbMaritalStatus.Controls.Add(this.rdbIdCard);
-            this.grbMaritalStatus.Location = new System.Drawing.Point(552, 8);
-            this.grbMaritalStatus.Name = "grbMaritalStatus";
-            this.grbMaritalStatus.Size = new System.Drawing.Size(165, 28);
-            this.grbMaritalStatus.TabIndex = 85;
-            this.grbMaritalStatus.TabStop = false;
+            this.grbPrintOpt.Controls.Add(this.rdbBiodata);
+            this.grbPrintOpt.Controls.Add(this.rdbIdCard);
+            this.grbPrintOpt.Location = new System.Drawing.Point(552, 8);
+            this.grbPrintOpt.Name = "grbPrintOpt";
+            this.grbPrintOpt.Size = new System.Drawing.Size(165, 28);
+            this.grbPrintOpt.TabIndex = 85;
+            this.grbPrintOpt.TabStop = false;
             // 
             // rdbBiodata
             // 
@@ -69,6 +69,7 @@
             this.rdbBiodata.TabIndex = 6;
             this.rdbBiodata.Text = "Bio Data";
             this.rdbBiodata.UseVisualStyleBackColor = true;
+            this.rdbBiodata.CheckedChanged += new System.EventHandler(this.grbPrintOpt_Enter);
             // 
             // rdbIdCard
             // 
@@ -79,6 +80,7 @@
             this.rdbIdCard.TabIndex = 7;
             this.rdbIdCard.Text = "ID Card";
             this.rdbIdCard.UseVisualStyleBackColor = true;
+            this.rdbIdCard.CheckedChanged += new System.EventHandler(this.grbPrintOpt_Enter);
             // 
             // lblSelectOpt
             // 
@@ -88,16 +90,15 @@
             this.lblSelectOpt.Size = new System.Drawing.Size(114, 13);
             this.lblSelectOpt.TabIndex = 84;
             this.lblSelectOpt.Text = "Select the Print Format";
-            this.lblSelectOpt.Click += new System.EventHandler(this.lblMaritalStatus_Click);
             // 
-            // webBrowser1
+            // WebBrows
             // 
-            this.webBrowser1.Location = new System.Drawing.Point(0, 49);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(727, 391);
-            this.webBrowser1.TabIndex = 1;
-            this.webBrowser1.Visible = false;
+            this.WebBrows.Location = new System.Drawing.Point(0, 49);
+            this.WebBrows.MinimumSize = new System.Drawing.Size(20, 20);
+            this.WebBrows.Name = "WebBrows";
+            this.WebBrows.Size = new System.Drawing.Size(727, 391);
+            this.WebBrows.TabIndex = 1;
+            this.WebBrows.Visible = false;
             // 
             // btnPrint
             // 
@@ -108,16 +109,17 @@
             this.btnPrint.TabIndex = 2;
             this.btnPrint.Text = "Print";
             this.btnPrint.UseVisualStyleBackColor = true;
+            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
             // btnExit
             // 
-            this.btnExit.Enabled = false;
             this.btnExit.Location = new System.Drawing.Point(633, 453);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 23);
             this.btnExit.TabIndex = 3;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // WinformPdfViewer
             // 
@@ -127,14 +129,14 @@
             this.ControlBox = false;
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnPrint);
-            this.Controls.Add(this.webBrowser1);
+            this.Controls.Add(this.WebBrows);
             this.Controls.Add(this.panel1);
             this.Name = "WinformPdfViewer";
             this.Text = "PDF Viewer";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.grbMaritalStatus.ResumeLayout(false);
-            this.grbMaritalStatus.PerformLayout();
+            this.grbPrintOpt.ResumeLayout(false);
+            this.grbPrintOpt.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -142,11 +144,11 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.GroupBox grbMaritalStatus;
+        private System.Windows.Forms.GroupBox grbPrintOpt;
         private System.Windows.Forms.RadioButton rdbBiodata;
         private System.Windows.Forms.RadioButton rdbIdCard;
         internal System.Windows.Forms.Label lblSelectOpt;
-        private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.WebBrowser WebBrows;
         private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.Button btnExit;
 

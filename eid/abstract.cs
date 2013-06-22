@@ -101,7 +101,7 @@ namespace eid
 
         }
 
-        private void btnPrint_Click(object sender, EventArgs e)
+        protected virtual void btnPrint_Click(object sender, EventArgs e)
         {
 
         }

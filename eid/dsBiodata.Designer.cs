@@ -740,7 +740,7 @@ namespace eid {
                         string ER_REF1_POST_OFFICE, 
                         string ER_REF1_DISTRICT, 
                         string ER_REF1_STATE, 
-                        string ER_REF1_TELEPHONE, 
+                        int ER_REF1_TELEPHONE, 
                         int ER_REF1_PINCODE, 
                         string ER_REF1_OCCUPATION, 
                         string ER_REF2_NAME, 
@@ -749,14 +749,14 @@ namespace eid {
                         string ER_REF2_POST_OFFICE, 
                         string ER_REF2_DISTRICT, 
                         string ER_REF2_STATE, 
-                        string ER_REF2_TELEPHONE, 
-                        string ER_REF2_PINCODE, 
+                        int ER_REF2_TELEPHONE, 
+                        int ER_REF2_PINCODE, 
                         string ER_REF2_OCCUPATION, 
                         string ER_EMP_ABOUT, 
                         string ER_EMP_MARITAL_STATUS, 
-                        string ER_EMP_DOM, 
+                        System.DateTime ER_EMP_DOM, 
                         string ER_WIFE_NAME, 
-                        string ER_EMP_NOCHILD) {
+                        int ER_EMP_NOCHILD) {
                 dsBiodataRow rowdsBiodataRow = ((dsBiodataRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ER_EMP_NO,
@@ -907,7 +907,7 @@ namespace eid {
                 base.Columns.Add(this.columnER_REF1_DISTRICT);
                 this.columnER_REF1_STATE = new global::System.Data.DataColumn("ER_REF1_STATE", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnER_REF1_STATE);
-                this.columnER_REF1_TELEPHONE = new global::System.Data.DataColumn("ER_REF1_TELEPHONE", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnER_REF1_TELEPHONE = new global::System.Data.DataColumn("ER_REF1_TELEPHONE", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnER_REF1_TELEPHONE);
                 this.columnER_REF1_PINCODE = new global::System.Data.DataColumn("ER_REF1_PINCODE", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnER_REF1_PINCODE);
@@ -925,9 +925,9 @@ namespace eid {
                 base.Columns.Add(this.columnER_REF2_DISTRICT);
                 this.columnER_REF2_STATE = new global::System.Data.DataColumn("ER_REF2_STATE", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnER_REF2_STATE);
-                this.columnER_REF2_TELEPHONE = new global::System.Data.DataColumn("ER_REF2_TELEPHONE", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnER_REF2_TELEPHONE = new global::System.Data.DataColumn("ER_REF2_TELEPHONE", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnER_REF2_TELEPHONE);
-                this.columnER_REF2_PINCODE = new global::System.Data.DataColumn("ER_REF2_PINCODE", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnER_REF2_PINCODE = new global::System.Data.DataColumn("ER_REF2_PINCODE", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnER_REF2_PINCODE);
                 this.columnER_REF2_OCCUPATION = new global::System.Data.DataColumn("ER_REF2_OCCUPATION", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnER_REF2_OCCUPATION);
@@ -935,11 +935,11 @@ namespace eid {
                 base.Columns.Add(this.columnER_EMP_ABOUT);
                 this.columnER_EMP_MARITAL_STATUS = new global::System.Data.DataColumn("ER_EMP_MARITAL_STATUS", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnER_EMP_MARITAL_STATUS);
-                this.columnER_EMP_DOM = new global::System.Data.DataColumn("ER_EMP_DOM", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnER_EMP_DOM = new global::System.Data.DataColumn("ER_EMP_DOM", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnER_EMP_DOM);
                 this.columnER_WIFE_NAME = new global::System.Data.DataColumn("ER_WIFE_NAME", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnER_WIFE_NAME);
-                this.columnER_EMP_NOCHILD = new global::System.Data.DataColumn("ER_EMP_NOCHILD", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnER_EMP_NOCHILD = new global::System.Data.DataColumn("ER_EMP_NOCHILD", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnER_EMP_NOCHILD);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Emp_No", new global::System.Data.DataColumn[] {
                                 this.columnER_EMP_NO}, true));
@@ -1404,10 +1404,10 @@ namespace eid {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string ER_REF1_TELEPHONE {
+            public int ER_REF1_TELEPHONE {
                 get {
                     try {
-                        return ((string)(this[this.tabledsBiodata.ER_REF1_TELEPHONEColumn]));
+                        return ((int)(this[this.tabledsBiodata.ER_REF1_TELEPHONEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'ER_REF1_TELEPHONE\' in table \'dsBiodata\' is DBNull.", e);
@@ -1548,10 +1548,10 @@ namespace eid {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string ER_REF2_TELEPHONE {
+            public int ER_REF2_TELEPHONE {
                 get {
                     try {
-                        return ((string)(this[this.tabledsBiodata.ER_REF2_TELEPHONEColumn]));
+                        return ((int)(this[this.tabledsBiodata.ER_REF2_TELEPHONEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'ER_REF2_TELEPHONE\' in table \'dsBiodata\' is DBNull.", e);
@@ -1564,10 +1564,10 @@ namespace eid {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string ER_REF2_PINCODE {
+            public int ER_REF2_PINCODE {
                 get {
                     try {
-                        return ((string)(this[this.tabledsBiodata.ER_REF2_PINCODEColumn]));
+                        return ((int)(this[this.tabledsBiodata.ER_REF2_PINCODEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'ER_REF2_PINCODE\' in table \'dsBiodata\' is DBNull.", e);
@@ -1628,10 +1628,10 @@ namespace eid {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string ER_EMP_DOM {
+            public System.DateTime ER_EMP_DOM {
                 get {
                     try {
-                        return ((string)(this[this.tabledsBiodata.ER_EMP_DOMColumn]));
+                        return ((global::System.DateTime)(this[this.tabledsBiodata.ER_EMP_DOMColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'ER_EMP_DOM\' in table \'dsBiodata\' is DBNull.", e);
@@ -1660,10 +1660,10 @@ namespace eid {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string ER_EMP_NOCHILD {
+            public int ER_EMP_NOCHILD {
                 get {
                     try {
-                        return ((string)(this[this.tabledsBiodata.ER_EMP_NOCHILDColumn]));
+                        return ((int)(this[this.tabledsBiodata.ER_EMP_NOCHILDColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'ER_EMP_NOCHILD\' in table \'dsBiodata\' is DBNull.", e);

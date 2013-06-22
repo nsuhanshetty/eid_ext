@@ -182,6 +182,13 @@ namespace eid
                                     NoChildPath + "\\_NoChildPath_" + val + "" + NOChildext
                                 };
 
+            //when image is captured and not uploaded.
+            if (pcbEmpImage.ImageLocation == null && pcbEmpImage.Image!= null)
+            {
+                pcbEmpImage.Image.Save(EmpPicPath + "\\_EmpPicPath_" + val + "" + ".jpg");
+                pcbEmpImage.ImageLocation = EmpPicPath + "\\_EmpPicPath_" + val + "" + ".jpg";
+            }
+
             string[] SourcePath = { pcbEmpImage.ImageLocation, txtDobProof.Text, txtPerAddressProof.Text, txtPresAddressProof.Text,
                                       txtEduProof.Text, txtOthrQualProof.Text, txtNoOfChildProof.Text };
             
@@ -407,7 +414,7 @@ namespace eid
             tabControl1.Visible = false;
         }
 
-        protected override void Biodata_Click(object sender, EventArgs e)
+        protected override void btnPrint_Click(object sender, EventArgs e)
         {
             DeleteState = false;
             PrintState=true;
@@ -418,42 +425,7 @@ namespace eid
             lblMessage.Text = "Double Click the Username to Print the User Data.";
 
             //load the datagrid 
-            LoadDGV();
-            try
-            {
-                //load dataset
-                ReportDocument rptDoc = new ReportDocument();
-                dsBiodata ds = new dsBiodata();
-                DataTable dt = new DataTable();
-                
-                if (string.IsNullOrEmpty(txtEmpNo.))                        
-                dt=MysqlConn.getDataTable("Select * from employee_details where ED_EMP_NO='" + txtEmpNo.Text + "'");
-                ds.Tables[0].Merge(dt);
-
-                // load report to rptdoc
-                rptDoc.Load("Reports/BioData.rpt");
-
-                //set dataset to the report viewer.
-                rptDoc.SetDataSource(ds);
-
-                //convert rpt to pdf            
-                ExportOptions CrExportOptions;
-                DiskFileDestinationOptions CrDiskFileDestinationOptions = new DiskFileDestinationOptions();
-                PdfRtfWordFormatOptions CrFormatTypeOptions = new PdfRtfWordFormatOptions();
-                CrDiskFileDestinationOptions.DiskFileName = "Reports/Biodata.pdf";
-                CrExportOptions = rptDoc.ExportOptions;//Report document  object has to be given here
-                CrExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
-                CrExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
-                CrExportOptions.DestinationOptions = CrDiskFileDestinationOptions;
-                CrExportOptions.FormatOptions = CrFormatTypeOptions;
-                rptDoc.Export();
-
-            }
-            catch (Exception ex)
-            {
-                ed.WriteToErrorLog(ErrorDump.ErrorDumpErrorLogType.Critical, ex, "Crystal Report Error");
-            }
-            //open pdf in webbrowser
+            LoadDGV();           
         }
 
         protected override void btnexit_Click(object sender, EventArgs e)
@@ -611,6 +583,7 @@ namespace eid
         {
             DialogResult dr;
 
+            # region DeleteUser 
             if (DeleteState)
             {
                 //get the row no.
@@ -637,7 +610,20 @@ namespace eid
                 //}
                 return;
             }
+            # endregion delete
 
+            # region PrintUser
+            if (PrintState)
+            {
+                WinformPdfViewer wfPdfView = new WinformPdfViewer(Convert.ToString(dgvView.Rows[e.RowIndex].Cells["ER_EMP_NO"].Value));
+                wfPdfView.Show();
+      
+            //open pdf in webbrowser
+                return;
+            }
+            # endregion PrintUser
+             
+            # region Modify/User
             // on modify
             dr = MessageBox.Show("Do you want to Modify the details of Employee " + Convert.ToString(dgvView.Rows[e.RowIndex].Cells[2].Value), "Modify Employee Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
             if (dr == DialogResult.No)
@@ -744,6 +730,9 @@ namespace eid
             tabControl1.Visible = true;
 
             UpdateState = true;
+            # endregion ModifyUser
+
+          
         }
 
         private void btnCapture_Click(object sender, EventArgs e)

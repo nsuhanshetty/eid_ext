@@ -137,9 +137,9 @@ namespace eid
                 }
                 if (ctrol is PictureBox)
                 {
-                    if (((PictureBox)ctrol).ImageLocation==null)
+                    if (((PictureBox)ctrol).Image==null)
                     {
-                        MessageBox.Show("Picture Box " + ctrol.Name + " is empty." + Environment.NewLine + "Please try again.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);                        
+                        MessageBox.Show("Employee Image is Mandatory and cannot be empty." + Environment.NewLine + "Please insert and try again.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);                        
                         return true;
                     }
                 }
