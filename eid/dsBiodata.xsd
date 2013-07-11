@@ -52,6 +52,16 @@
               <xs:element name="ER_EMP_DOM" msprop:Generator_ColumnVarNameInTable="columnER_EMP_DOM" msprop:Generator_ColumnPropNameInRow="ER_EMP_DOM" msprop:Generator_ColumnPropNameInTable="ER_EMP_DOMColumn" msprop:Generator_UserColumnName="ER_EMP_DOM" type="xs:dateTime" minOccurs="0" />
               <xs:element name="ER_WIFE_NAME" msprop:Generator_ColumnVarNameInTable="columnER_WIFE_NAME" msprop:Generator_ColumnPropNameInRow="ER_WIFE_NAME" msprop:Generator_ColumnPropNameInTable="ER_WIFE_NAMEColumn" msprop:Generator_UserColumnName="ER_WIFE_NAME" type="xs:string" minOccurs="0" />
               <xs:element name="ER_EMP_NOCHILD" msprop:Generator_ColumnVarNameInTable="columnER_EMP_NOCHILD" msprop:Generator_ColumnPropNameInRow="ER_EMP_NOCHILD" msprop:Generator_ColumnPropNameInTable="ER_EMP_NOCHILDColumn" msprop:Generator_UserColumnName="ER_EMP_NOCHILD" type="xs:int" minOccurs="0" />
+              <xs:element name="ER_EMP_PIC" msprop:Generator_ColumnVarNameInTable="columnER_EMP_PIC" msprop:Generator_ColumnPropNameInRow="ER_EMP_PIC" msprop:Generator_ColumnPropNameInTable="ER_EMP_PICColumn" msprop:Generator_UserColumnName="ER_EMP_PIC" type="xs:base64Binary" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dsIdCard" msprop:Generator_TableClassName="dsIdCardDataTable" msprop:Generator_TableVarName="tabledsIdCard" msprop:Generator_TablePropName="dsIdCard" msprop:Generator_RowDeletingName="dsIdCardRowDeleting" msprop:Generator_RowChangingName="dsIdCardRowChanging" msprop:Generator_RowEvHandlerName="dsIdCardRowChangeEventHandler" msprop:Generator_RowDeletedName="dsIdCardRowDeleted" msprop:Generator_UserTableName="dsIdCard" msprop:Generator_RowChangedName="dsIdCardRowChanged" msprop:Generator_RowEvArgName="dsIdCardRowChangeEvent" msprop:Generator_RowClassName="dsIdCardRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ER_EMP_NAME" msprop:Generator_ColumnVarNameInTable="columnER_EMP_NAME" msprop:Generator_ColumnPropNameInRow="ER_EMP_NAME" msprop:Generator_ColumnPropNameInTable="ER_EMP_NAMEColumn" msprop:Generator_UserColumnName="ER_EMP_NAME" type="xs:string" minOccurs="0" />
+              <xs:element name="ER_EMP_NO" msprop:Generator_ColumnVarNameInTable="columnER_EMP_NO" msprop:Generator_ColumnPropNameInRow="ER_EMP_NO" msprop:Generator_ColumnPropNameInTable="ER_EMP_NOColumn" msprop:Generator_UserColumnName="ER_EMP_NO" type="xs:string" minOccurs="0" />
+              <xs:element name="ER_EMP_PIC" msprop:Generator_ColumnVarNameInTable="columnER_EMP_PIC" msprop:Generator_ColumnPropNameInRow="ER_EMP_PIC" msprop:Generator_ColumnPropNameInTable="ER_EMP_PICColumn" msprop:Generator_UserColumnName="ER_EMP_PIC" type="xs:base64Binary" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

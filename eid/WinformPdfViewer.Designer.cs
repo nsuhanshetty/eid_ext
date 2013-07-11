@@ -33,9 +33,9 @@
             this.rdbBiodata = new System.Windows.Forms.RadioButton();
             this.rdbIdCard = new System.Windows.Forms.RadioButton();
             this.lblSelectOpt = new System.Windows.Forms.Label();
-            this.WebBrows = new System.Windows.Forms.WebBrowser();
             this.btnPrint = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
+            this.RptView = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.panel1.SuspendLayout();
             this.grbPrintOpt.SuspendLayout();
             this.SuspendLayout();
@@ -47,16 +47,16 @@
             this.panel1.Controls.Add(this.lblSelectOpt);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(727, 43);
+            this.panel1.Size = new System.Drawing.Size(815, 43);
             this.panel1.TabIndex = 0;
             // 
             // grbPrintOpt
             // 
             this.grbPrintOpt.Controls.Add(this.rdbBiodata);
             this.grbPrintOpt.Controls.Add(this.rdbIdCard);
-            this.grbPrintOpt.Location = new System.Drawing.Point(552, 8);
+            this.grbPrintOpt.Location = new System.Drawing.Point(632, 8);
             this.grbPrintOpt.Name = "grbPrintOpt";
-            this.grbPrintOpt.Size = new System.Drawing.Size(165, 28);
+            this.grbPrintOpt.Size = new System.Drawing.Size(166, 28);
             this.grbPrintOpt.TabIndex = 85;
             this.grbPrintOpt.TabStop = false;
             // 
@@ -85,25 +85,16 @@
             // lblSelectOpt
             // 
             this.lblSelectOpt.AutoSize = true;
-            this.lblSelectOpt.Location = new System.Drawing.Point(432, 19);
+            this.lblSelectOpt.Location = new System.Drawing.Point(512, 19);
             this.lblSelectOpt.Name = "lblSelectOpt";
             this.lblSelectOpt.Size = new System.Drawing.Size(114, 13);
             this.lblSelectOpt.TabIndex = 84;
             this.lblSelectOpt.Text = "Select the Print Format";
             // 
-            // WebBrows
-            // 
-            this.WebBrows.Location = new System.Drawing.Point(0, 49);
-            this.WebBrows.MinimumSize = new System.Drawing.Size(20, 20);
-            this.WebBrows.Name = "WebBrows";
-            this.WebBrows.Size = new System.Drawing.Size(727, 391);
-            this.WebBrows.TabIndex = 1;
-            this.WebBrows.Visible = false;
-            // 
             // btnPrint
             // 
             this.btnPrint.Enabled = false;
-            this.btnPrint.Location = new System.Drawing.Point(552, 453);
+            this.btnPrint.Location = new System.Drawing.Point(647, 488);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(75, 23);
             this.btnPrint.TabIndex = 2;
@@ -113,7 +104,7 @@
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(633, 453);
+            this.btnExit.Location = new System.Drawing.Point(728, 488);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 23);
             this.btnExit.TabIndex = 3;
@@ -121,15 +112,28 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // RptView
+            // 
+            this.RptView.AccessibleDescription = "";
+            this.RptView.ActiveViewIndex = -1;
+            this.RptView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.RptView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.RptView.DisplayStatusBar = false;
+            this.RptView.Location = new System.Drawing.Point(3, 49);
+            this.RptView.Name = "RptView";
+            this.RptView.Size = new System.Drawing.Size(812, 433);
+            this.RptView.TabIndex = 4;
+            this.RptView.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;
+            // 
             // WinformPdfViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(727, 488);
+            this.ClientSize = new System.Drawing.Size(815, 523);
             this.ControlBox = false;
+            this.Controls.Add(this.RptView);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnPrint);
-            this.Controls.Add(this.WebBrows);
             this.Controls.Add(this.panel1);
             this.Name = "WinformPdfViewer";
             this.Text = "PDF Viewer";
@@ -148,9 +152,9 @@
         private System.Windows.Forms.RadioButton rdbBiodata;
         private System.Windows.Forms.RadioButton rdbIdCard;
         internal System.Windows.Forms.Label lblSelectOpt;
-        private System.Windows.Forms.WebBrowser WebBrows;
         private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.Button btnExit;
+        private CrystalDecisions.Windows.Forms.CrystalReportViewer RptView;
 
 
     }
