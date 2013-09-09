@@ -1,39 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Windows.Forms;
-using System.Configuration;
-using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.Shared;
 
 namespace eid
 {
     public partial class WinformEmpReg : WinformAbstract
     {
         #region 'PropertiesAndVariables
-        string qry = "",EmpPicext,DOBext,NOChildext,PermAddext,PresAddext,EduQualext,OthrQualext;
-        
+        string qry = "", EmpPicext, DOBext, NOChildext, PermAddext, PresAddext, EduQualext, OthrQualext;
+
         Common com = new Common();
         ErrorDump ed = new ErrorDump();
         DataTable dt = new DataTable();
 
         MySql.Data.MySqlClient.MySqlDataReader myReader = null;
-        
+
         WinformAbstract wfAbs = new WinformAbstract();
         WinformMainmenu wfMain = new WinformMainmenu();
 
         string EmpPicPath = Application.StartupPath + ConfigurationManager.AppSettings["EmpPicProof"];
         string DobPath = Application.StartupPath + ConfigurationManager.AppSettings["DOBProof"];
-        string NoChildPath = Application.StartupPath +ConfigurationManager.AppSettings["NoChild"];
-        string PermAddPath = Application.StartupPath +ConfigurationManager.AppSettings["PermAdd"];
-        string PresAddPath = Application.StartupPath +ConfigurationManager.AppSettings["PresAdd"];
-        string EduQualPath = Application.StartupPath +ConfigurationManager.AppSettings["EduQual"];
-        string OthrQualPath = Application.StartupPath +ConfigurationManager.AppSettings["OthrQual"];
+        string NoChildPath = Application.StartupPath + ConfigurationManager.AppSettings["NoChild"];
+        string PermAddPath = Application.StartupPath + ConfigurationManager.AppSettings["PermAdd"];
+        string PresAddPath = Application.StartupPath + ConfigurationManager.AppSettings["PresAdd"];
+        string EduQualPath = Application.StartupPath + ConfigurationManager.AppSettings["EduQual"];
+        string OthrQualPath = Application.StartupPath + ConfigurationManager.AppSettings["OthrQual"];
 
         private bool mdelete;
         private bool DeleteState
@@ -76,39 +71,30 @@ namespace eid
 
         #endregion 'PropertiesAndVariables
 
-         #region 'PrivateAndProtectedmethods
-
         public WinformEmpReg()
         {
             InitializeComponent();
         }
 
+        #region 'PrivateAndProtectedmethods      
         private void WinformStaffDetail_Load(object sender, EventArgs e)
         {
             this.tabControl1.Visible = false;
             this.pnlUsrView.Visible = false;
 
-            //set location of the pnlView
-            pnlUsrView.Location = new Point(0,75);
-           // dgvView.Size = new Size(785,450);
+            this.Location = new Point(this.Location.X + 300, this.Location.Y);
+            pnlUsrView.Location = new Point(0, 75);
             this.Size = new Size(785, 683);
-                        
-            if (!Directory.Exists(EmpPicPath))
-                Directory.CreateDirectory(EmpPicPath);
-            if (!Directory.Exists(DobPath))
-                Directory.CreateDirectory(DobPath);
-            if (!Directory.Exists(NOChildext))
-                Directory.CreateDirectory(NoChildPath);
-            if (!Directory.Exists(PermAddPath))
-                Directory.CreateDirectory(PermAddPath);
-            if (!Directory.Exists(PresAddPath))
-                Directory.CreateDirectory(PresAddPath);
-            if (!Directory.Exists(EduQualPath))
-                Directory.CreateDirectory(EduQualPath);
-            if (!Directory.Exists(OthrQualPath))
-                Directory.CreateDirectory(OthrQualPath);
+
+            List<string> imageDir = new List<string> { EmpPicPath, DobPath, NoChildPath, PermAddPath, PresAddPath, EduQualPath, OthrQualPath };
+            foreach (string imgPath in imageDir)
+            {
+                if (!Directory.Exists(imgPath))
+                    Directory.CreateDirectory(imgPath);
+            };
         }
 
+        # region FunctionMethods
         protected override void btnnew_Click(object sender, EventArgs e)
         {
             MenuMode(this, false);
@@ -167,7 +153,6 @@ namespace eid
             //check if textbox is empty or not
             if (com.isempty(tabControl1, true, check) == true)
             {
-                //com.clearcontrol(tabControl1, true);
                 return;
             }
 
@@ -183,7 +168,7 @@ namespace eid
                                 };
 
             //when image is captured and not uploaded.
-            if (pcbEmpImage.ImageLocation == null && pcbEmpImage.Image!= null)
+            if (pcbEmpImage.ImageLocation == null && pcbEmpImage.Image != null)
             {
                 pcbEmpImage.Image.Save(EmpPicPath + "\\_EmpPicPath_" + val + "" + ".jpg");
                 pcbEmpImage.ImageLocation = EmpPicPath + "\\_EmpPicPath_" + val + "" + ".jpg";
@@ -191,12 +176,12 @@ namespace eid
 
             string[] SourcePath = { pcbEmpImage.ImageLocation, txtDobProof.Text, txtPerAddressProof.Text, txtPresAddressProof.Text,
                                       txtEduProof.Text, txtOthrQualProof.Text, txtNoOfChildProof.Text };
-            
-            
-            List<string> StrocProcKey = new List<string>{"pER_EMP_NO","pER_EMP_NAME","pER_FATHER_NAME","pER_EMP_DOB","pER_EMP_READ","pER_EMP_WRITE","pER_EMP_SPEAK","pER_EMP_PER_ADDRESS","pER_EMP_PRES_ADDRESS","pER_EMP_PHONE_NO","pER_EMP_MOBILE_NO","pER_EMP_EDU_QUAL","pER_EMP_OTHR_QUAL","pER_EMP_EXPERIENCE_SEC_SER","pER_REF1_NAME","pER_REF1_HOUSE_NO","pER_REF1_STREET_NO","pER_REF1_POST_OFFICE","pER_REF1_DISTRICT","pER_REF1_STATE","pER_REF1_TELEPHONE","pER_REF1_PINCODE","pER_REF1_OCCUPATION","pER_REF2_NAME","pER_REF2_HOUSE_NO","pER_REF2_STREET_NO","pER_REF2_POST_OFFICE","pER_REF2_DISTRICT","pER_REF2_STATE","pER_REF2_TELEPHONE","pER_REF2_PINCODE","pER_REF2_OCCUPATION","pER_EMP_ABOUT","pER_EMP_MARITAL_STATUS","pER_EMP_DOM","pER_WIFE_NAME","pER_EMP_NOCHILD"};
 
-            List<object> StroProcVal = new List<object> { txtEmpNo.Text , txtName.Text , txtFthrName.Text , dtpDob.Value.ToString("yyyy-MM-dd") , txtRead.Text , txtWrite.Text , txtSpeak.Text , txtPermAdd.Text , txtPresAdd.Text , txtPhoneNo.Text , txtMobNo.Text , txtEduQual.Text , txtOthrQual.Text , txtExpInSec.Text , txtNameRef1.Text , txtHouseNoRef1.Text , txtStreetNoRef1.Text , txtPostOffRef1.Text , txtDistRef1.Text , txtStateRef1.Text , txtTeleRef1.Text , txtPincodeRef1.Text , txtOccRef1.Text , txtNameRef2.Text , txtHouseNoRef2.Text , txtStreetNoRef2.Text , txtPostOffRef2.Text , txtDistRef2.Text , txtStateRef2.Text , txtTeleRef2.Text , txtPincodeRef2.Text , txtOccRef2.Text , txtAbout.Text};
-             
+
+            List<string> StrocProcKey = new List<string> { "pER_EMP_NO", "pER_EMP_NAME", "pER_FATHER_NAME", "pER_EMP_DOB", "pER_EMP_READ", "pER_EMP_WRITE", "pER_EMP_SPEAK", "pER_EMP_PER_ADDRESS", "pER_EMP_PRES_ADDRESS", "pER_EMP_PHONE_NO", "pER_EMP_MOBILE_NO", "pER_EMP_EDU_QUAL", "pER_EMP_OTHR_QUAL", "pER_EMP_EXPERIENCE_SEC_SER", "pER_REF1_NAME", "pER_REF1_HOUSE_NO", "pER_REF1_STREET_NO", "pER_REF1_POST_OFFICE", "pER_REF1_DISTRICT", "pER_REF1_STATE", "pER_REF1_TELEPHONE", "pER_REF1_PINCODE", "pER_REF1_OCCUPATION", "pER_REF2_NAME", "pER_REF2_HOUSE_NO", "pER_REF2_STREET_NO", "pER_REF2_POST_OFFICE", "pER_REF2_DISTRICT", "pER_REF2_STATE", "pER_REF2_TELEPHONE", "pER_REF2_PINCODE", "pER_REF2_OCCUPATION", "pER_EMP_ABOUT", "pER_EMP_MARITAL_STATUS", "pER_EMP_DOM", "pER_WIFE_NAME", "pER_EMP_NOCHILD" };
+
+            List<object> StroProcVal = new List<object> { txtEmpNo.Text, txtName.Text, txtFthrName.Text, dtpDob.Value.ToString("yyyy-MM-dd"), txtRead.Text, txtWrite.Text, txtSpeak.Text, txtPermAdd.Text, txtPresAdd.Text, txtPhoneNo.Text, txtMobNo.Text, txtEduQual.Text, txtOthrQual.Text, txtExpInSec.Text, txtNameRef1.Text, txtHouseNoRef1.Text, txtStreetNoRef1.Text, txtPostOffRef1.Text, txtDistRef1.Text, txtStateRef1.Text, txtTeleRef1.Text, txtPincodeRef1.Text, txtOccRef1.Text, txtNameRef2.Text, txtHouseNoRef2.Text, txtStreetNoRef2.Text, txtPostOffRef2.Text, txtDistRef2.Text, txtStateRef2.Text, txtTeleRef2.Text, txtPincodeRef2.Text, txtOccRef2.Text, txtAbout.Text };
+
             if (rdbSingle.Checked == true)
             {
                 StroProcVal.Add("Single");
@@ -216,7 +201,7 @@ namespace eid
             StroProcVal.Add(DateTime.Now.Date.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToString("HH:mm:ss"));
 
             if (UpdateState != true)
-            {                
+            {
                 StrocProcKey.Add("pER_CREATED_BY");
                 StrocProcKey.Add("pER_CREATED_ON");
                 //StroProcVal.Add((User.UserId).ToString());
@@ -228,7 +213,7 @@ namespace eid
                     dict.Add(StrocProcKey[i], StroProcVal[i]);
                 }
 
-                if( MysqlConn.dictionaryToTable(dict,"insert_Emp_Details") >=1 )
+                if (MysqlConn.dictionaryToTable(dict, "insert_Emp_Details") >= 1)
                 {
 
                     // make grpMarital empty
@@ -271,36 +256,36 @@ namespace eid
                     }
 
 
-                        //for (int i = 0; i <= DestPath.Length - 2; i++)
-                        //{
-                        //    if (string.IsNullOrEmpty(SourcePath[i]) != true)
-                        //        File.Copy(SourcePath[i], DestPath[i]);
-                        //}
+                    //for (int i = 0; i <= DestPath.Length - 2; i++)
+                    //{
+                    //    if (string.IsNullOrEmpty(SourcePath[i]) != true)
+                    //        File.Copy(SourcePath[i], DestPath[i]);
+                    //}
 
-                        //if (rdbMarried.Checked == true && string.IsNullOrEmpty(txtNoOfChildProof.Text) != true)
-                        //{
-                        //    File.Copy(txtNoOfChildProof.Text, DestPath[5]);
-                        //}
+                    //if (rdbMarried.Checked == true && string.IsNullOrEmpty(txtNoOfChildProof.Text) != true)
+                    //{
+                    //    File.Copy(txtNoOfChildProof.Text, DestPath[5]);
+                    //}
 
                     qry = "insert into employee_proof(EP_EMP_NO, EP_EMP_PIC, EP_EMP_DOB_PROOF, EP_EMP_PER_ADDRESS_PROOF, EP_EMP_PRES_ADDRESS_PROOF, EP_EMP_EDU_QUAL_PROOF,EP_EMP_NOCHILD_PROOF,EP_EMP_OTHR_QUAL_PROOF) values ('" + txtEmpNo.Text + "',";
                     /*+DestPath[0].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "','" + DestPath[1].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "','" + DestPath[2].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "','" + DestPath[3].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "','" + DestPath[4].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
                     */
-                        for (int i = 0; i < DestPath.Length-2; i++)
-                        {
-                           qry+= "'" + DestPath[i].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
-                        }
-                    
+                    for (int i = 0; i < DestPath.Length - 2; i++)
+                    {
+                        qry += "'" + DestPath[i].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
+                    }
 
-                        if ((rdbMarried.Checked == true) && (!string.IsNullOrEmpty(txtNoOfChildProof.Text)))
-                            qry += "'" + DestPath[6].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
-                        else
-                            qry += "NULL,";
 
-                        qry += (string.IsNullOrEmpty(txtOthrQualProof.Text) == false) ? "'" + DestPath[5].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "')" : "NULL)";
+                    if ((rdbMarried.Checked == true) && (!string.IsNullOrEmpty(txtNoOfChildProof.Text)))
+                        qry += "'" + DestPath[6].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
+                    else
+                        qry += "NULL,";
 
-                        MysqlConn.executeQry(qry);
+                    qry += (string.IsNullOrEmpty(txtOthrQualProof.Text) == false) ? "'" + DestPath[5].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "')" : "NULL)";
 
-                    
+                    MysqlConn.executeQry(qry);
+
+
                 }
             }
             else
@@ -315,71 +300,71 @@ namespace eid
                 {
                     dict.Add(StrocProcKey[i], StroProcVal[i]);
                 }
-              
+
                 if (MysqlConn.dictionaryToTable(dict, "update_Emp_Details") >= 1)
                 {
                     // make grpMarital empty
-                    if(rdbSingle.Checked==true)
+                    if (rdbSingle.Checked == true)
                         com.clearcontrol(grbMarital, true);
 
 
                     //save all image file to respective folders if they are changed                    
 
-                        for (int i = 0; i <= DestPath.Length - 2; i++)
+                    for (int i = 0; i <= DestPath.Length - 2; i++)
+                    {
+                        if (string.IsNullOrEmpty(SourcePath[i]) != true)
                         {
-                            if (string.IsNullOrEmpty(SourcePath[i]) != true)
-                            {
-                                if (string.Equals(SourcePath[i], DestPath[i]) == false)
-                                {
-                                    if (File.Exists(DestPath[i]) == true)
-                                        File.Delete(DestPath[i]);
-                                    File.Copy(SourcePath[i], DestPath[i]);
-                                }
-                            }
-                            else
+                            if (string.Equals(SourcePath[i], DestPath[i]) == false)
                             {
                                 if (File.Exists(DestPath[i]) == true)
                                     File.Delete(DestPath[i]);
+                                File.Copy(SourcePath[i], DestPath[i]);
                             }
                         }
-
-                        if (rdbMarried.Checked == true && string.IsNullOrEmpty(txtNoOfChildProof.Text) != true)
-                        {
-                            if (File.Equals(txtNoOfChildProof.Text, DestPath[6]) == false)
-                            {
-                                if (File.Exists(DestPath[6]) == true)
-                                    File.Delete(DestPath[6]);
-                                File.Copy(txtNoOfChildProof.Text, DestPath[6]);
-                            }
-                        }
-                        else if (string.IsNullOrEmpty(txtNoOfChildProof.Text) == true)
-                        {
-                            if (File.Exists(DestPath[6]))
-                                File.Delete(DestPath[6]);
-                        }
-
-                        string[] updsource = { "EP_EMP_PIC", "EP_EMP_DOB_PROOF", "EP_EMP_PER_ADDRESS_PROOF", "EP_EMP_PRES_ADDRESS_PROOF", "EP_EMP_EDU_QUAL_PROOF" };
-
-                       // qry = "update employee_proof set EP_EMP_PIC='" + DestPath[0].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_DOB_PROOF='" + DestPath[1].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_PER_ADDRESS_PROOF='" + DestPath[2].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_PRES_ADDRESS_PROOF='" + DestPath[3].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_EDU_QUAL_PROOF='" + DestPath[4].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
-
-                        qry = "update employee_proof set ";
-
-                        for (int i = 0; i < DestPath.Length-2 ; i++)
-                        {
-                            qry+= "" + updsource[i] + "='" + DestPath[i].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
-                        }
-                        
-                        if ((rdbMarried.Checked == true) && (!string.IsNullOrEmpty(txtNoOfChildProof.Text)))
-                            qry += "EP_EMP_NOCHILD_PROOF='" + DestPath[6].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";                         
                         else
-                            qry += "EP_EMP_NOCHILD_PROOF=NULL,";
+                        {
+                            if (File.Exists(DestPath[i]) == true)
+                                File.Delete(DestPath[i]);
+                        }
+                    }
 
-                        qry += (string.IsNullOrEmpty(txtOthrQualProof.Text) == false) ? "EP_EMP_OTHR_QUAL_PROOF='" + DestPath[5].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "'" : "EP_EMP_OTHR_QUAL_PROOF=NULL";
+                    if (rdbMarried.Checked == true && string.IsNullOrEmpty(txtNoOfChildProof.Text) != true)
+                    {
+                        if (File.Equals(txtNoOfChildProof.Text, DestPath[6]) == false)
+                        {
+                            if (File.Exists(DestPath[6]) == true)
+                                File.Delete(DestPath[6]);
+                            File.Copy(txtNoOfChildProof.Text, DestPath[6]);
+                        }
+                    }
+                    else if (string.IsNullOrEmpty(txtNoOfChildProof.Text) == true)
+                    {
+                        if (File.Exists(DestPath[6]))
+                            File.Delete(DestPath[6]);
+                    }
 
-                        qry += " where EP_EMP_NO='" + txtEmpNo.Text + "'";
+                    string[] updsource = { "EP_EMP_PIC", "EP_EMP_DOB_PROOF", "EP_EMP_PER_ADDRESS_PROOF", "EP_EMP_PRES_ADDRESS_PROOF", "EP_EMP_EDU_QUAL_PROOF" };
 
-                        MysqlConn.executeQry(qry);
-                    
+                    // qry = "update employee_proof set EP_EMP_PIC='" + DestPath[0].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_DOB_PROOF='" + DestPath[1].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_PER_ADDRESS_PROOF='" + DestPath[2].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_PRES_ADDRESS_PROOF='" + DestPath[3].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_EDU_QUAL_PROOF='" + DestPath[4].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
+
+                    qry = "update employee_proof set ";
+
+                    for (int i = 0; i < DestPath.Length - 2; i++)
+                    {
+                        qry += "" + updsource[i] + "='" + DestPath[i].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
+                    }
+
+                    if ((rdbMarried.Checked == true) && (!string.IsNullOrEmpty(txtNoOfChildProof.Text)))
+                        qry += "EP_EMP_NOCHILD_PROOF='" + DestPath[6].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
+                    else
+                        qry += "EP_EMP_NOCHILD_PROOF=NULL,";
+
+                    qry += (string.IsNullOrEmpty(txtOthrQualProof.Text) == false) ? "EP_EMP_OTHR_QUAL_PROOF='" + DestPath[5].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "'" : "EP_EMP_OTHR_QUAL_PROOF=NULL";
+
+                    qry += " where EP_EMP_NO='" + txtEmpNo.Text + "'";
+
+                    MysqlConn.executeQry(qry);
+
                 }
                 txtEmpNo.Enabled = true;
                 UpdateState = false;
@@ -390,9 +375,6 @@ namespace eid
 
             //clear the form
             com.clearcontrol(tabControl1, true);
-            //tabPer.Show();
-            //tabPer.Focus();
-            //tabPer.Select();
             txtEmpNo.Focus();
         }
 
@@ -401,11 +383,9 @@ namespace eid
             //check if on edit
             if (com.controlisinedit(tabControl1, true))
             {
-                DialogResult dr = MessageBox.Show("Do you want to Exit", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dr == DialogResult.No)
-                {
+                if (DialogResult.No == MessageBox.Show("Do you want to Exit", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
                     return;
-                }
+
                 //if yes
                 com.clearcontrol(tabControl1, true);
             }
@@ -417,7 +397,7 @@ namespace eid
         protected override void btnPrint_Click(object sender, EventArgs e)
         {
             DeleteState = false;
-            PrintState=true;
+            PrintState = true;
             txtSrchEmpName.Text = "";
             this.tabControl1.Visible = false;
             this.pnlUsrView.Visible = true;
@@ -425,7 +405,7 @@ namespace eid
             lblMessage.Text = "Double Click the Username to Print the User Data.";
 
             //load the datagrid 
-            LoadDGV();           
+            LoadDGV();
         }
 
         protected override void btnexit_Click(object sender, EventArgs e)
@@ -433,6 +413,14 @@ namespace eid
             this.Close();
         }
 
+        private void btnCapture_Click(object sender, EventArgs e)
+        {
+            WinformWebcam wfWebcam = new WinformWebcam(this);
+            wfWebcam.Show();
+        }
+        # endregion FunctionMethods
+
+        #region ValidationMethods
         private void grbMarital_Enter(object sender, EventArgs e)
         {
             grbMarital.Enabled = (rdbMarried.Checked) ? true : false;
@@ -463,7 +451,7 @@ namespace eid
             OfdDob.Title = "Open Document";
             OfdDob.Filter = "jpg files(*.jpg)|*.jpg|Gif files(*.gif)|*.gif|JPEG files(*.jpeg)|*.jpeg|Bitmap files(*.bmp)|*.bmp";
             OfdDob.InitialDirectory = @"C:\";
-            
+
             if (OfdDob.ShowDialog() == DialogResult.OK)
                 switch (btnName)
                 {
@@ -476,18 +464,18 @@ namespace eid
                         DOBext = Path.GetExtension(OfdDob.FileName);
                         break;
                     case "btnNoOfChildProof":
-                        txtNoOfChildProof.Text=OfdDob.FileName;
+                        txtNoOfChildProof.Text = OfdDob.FileName;
                         NOChildext = Path.GetExtension(OfdDob.FileName);
                         break;
-                    case "btnPerAddressProof": 
+                    case "btnPerAddressProof":
                         txtPerAddressProof.Text = OfdDob.FileName;
                         PermAddext = Path.GetExtension(OfdDob.FileName);
                         break;
-                    case "btnPresAddressProof": 
+                    case "btnPresAddressProof":
                         txtPresAddressProof.Text = OfdDob.FileName;
                         PresAddext = Path.GetExtension(OfdDob.FileName);
                         break;
-                    case "btnEduProof": 
+                    case "btnEduProof":
                         txtEduProof.Text = OfdDob.FileName;
                         EduQualext = Path.GetExtension(OfdDob.FileName);
                         break;
@@ -497,7 +485,7 @@ namespace eid
                         break;
 
                 }
-          }
+        }
 
         private void checkEmpNo(object sender, EventArgs e)
         {
@@ -517,7 +505,9 @@ namespace eid
                 }
             }
         }
+        #endregion ValidationMethods
 
+        #region ViewFunctionMethods
         private void LoadDGV()
         {
             //load the datagrid
@@ -545,29 +535,29 @@ namespace eid
 
             //If delete state is active then 2 else 1
             //int x = DeleteState ? 2 : 1;
-           // dgvView.Columns[0].HeaderText = "EMPLOYEE_ID";
+            // dgvView.Columns[0].HeaderText = "EMPLOYEE_ID";
             dgvView.Columns[1].HeaderText = "EMPLOYEE_NO";
             dgvView.Columns[2].HeaderText = "EMPLOYEE_NAME";
         }
 
         private void txtlSrchEmpName_TextChanged(object sender, EventArgs e)
-        {            
+        {
             //load the datagrid
             qry = "select  ER_EMP_NO as EMPLOYEE_NO,ER_EMP_NAME as EMPLOYEE_NAME from employee_registry where ER_DELETED='N' ";
 
             //the following loops work for both txtempname and txtempno 
             //to search among the datagridview
             if (!string.IsNullOrEmpty(txtSrchEmpName.Text))
-            qry+="and ER_EMP_NAME like '" + txtSrchEmpName.Text + "%'";
+                qry += "and ER_EMP_NAME like '" + txtSrchEmpName.Text + "%'";
             if (!string.IsNullOrEmpty(txtSrchEmpNo.Text))
                 qry += "and ER_EMP_NO like '" + txtSrchEmpNo.Text + "%'";
 
             dt = MysqlConn.getDataTable(qry);
 
             dt.Columns.Add("EMPLOYEE_ID");
-            for (int i = 0; i <= dt.Rows.Count - 1;i++ )
+            for (int i = 0; i <= dt.Rows.Count - 1; i++)
             {
-                dt.Rows[i]["EMPLOYEE_ID"]=i+1;
+                dt.Rows[i]["EMPLOYEE_ID"] = i + 1;
             }
             dt.Columns["EMPLOYEE_ID"].SetOrdinal(0);
 
@@ -575,15 +565,16 @@ namespace eid
             dt.Columns[1].Caption = "EMPLOYEE NO.";
             dt.Columns[2].Caption = "EMPLOYEE NAME";
 
-            this.dgvView.DataSource = dt.DefaultView;            
+            this.dgvView.DataSource = dt.DefaultView;
             dgvView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void dgvView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
             DialogResult dr;
 
-            # region DeleteUser 
+            # region DeleteUser
             if (DeleteState)
             {
                 //get the row no.
@@ -607,22 +598,22 @@ namespace eid
 
                 updateStatus(this, "User Deleted");
                 LoadDGV();
-                //}
+                this.Cursor = Cursors.Default;
                 return;
             }
             # endregion delete
 
             # region PrintUser
-            if (PrintState)
+            if (PrintState && e.RowIndex != -1)
             {
                 WinformPdfViewer wfPdfView = new WinformPdfViewer(Convert.ToString(dgvView.Rows[e.RowIndex].Cells["ER_EMP_NO"].Value));
                 wfPdfView.Show();
-      
-            //open pdf in webbrowser
+                this.Cursor = Cursors.Default;
+                //opn pdf in webbrowser
                 return;
             }
             # endregion PrintUser
-             
+
             # region Modify/User
             // on modify
             dr = MessageBox.Show("Do you want to Modify the details of Employee " + Convert.ToString(dgvView.Rows[e.RowIndex].Cells[2].Value), "Modify Employee Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
@@ -635,7 +626,7 @@ namespace eid
             txtEmpNo.Text = Convert.ToString(dgvView[1, e.RowIndex].Value);
             txtName.Text = Convert.ToString(dgvView[2, e.RowIndex].Value);
 
-          //  qry = "select * from employee_registry where ER_EMP_NO='" + txtEmpNo.Text + "' union select * from employee_proof where ER_EMP_NO='" +txtEmpNo.Text + "'";
+            //  qry = "select * from employee_registry where ER_EMP_NO='" + txtEmpNo.Text + "' union select * from employee_proof where ER_EMP_NO='" +txtEmpNo.Text + "'";
 
             qry = "select * from employee_registry as er,employee_proof as ep where ER_EMP_NO='" + txtEmpNo.Text + "' AND er.ER_EMP_NO=ep.EP_EMP_NO";
             myReader = MysqlConn.GetSQLDataReader(qry);
@@ -718,7 +709,7 @@ namespace eid
             }
 
             //select the userid and loadCheckBox
-        //    LoadCheckBox(Convert.ToString(dgvView[0, e.RowIndex].Value));
+            //    LoadCheckBox(Convert.ToString(dgvView[0, e.RowIndex].Value));
 
             //menustate close
             MenuMode(this, false);
@@ -730,15 +721,10 @@ namespace eid
             tabControl1.Visible = true;
 
             UpdateState = true;
+            this.Cursor = Cursors.Default;
             # endregion ModifyUser
 
-          
-        }
 
-        private void btnCapture_Click(object sender, EventArgs e)
-        {
-            WinformWebcam wfWebcam = new WinformWebcam(this);
-            wfWebcam.Show();
         }
 
         private void btnClear(object sender, EventArgs e)
@@ -769,6 +755,7 @@ namespace eid
                     break;
             }
         }
+        #endregion ViewFunctionMethods
 
         #endregion 'PrivateAndProtectedMethods
     }

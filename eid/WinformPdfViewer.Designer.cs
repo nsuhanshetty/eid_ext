@@ -35,7 +35,7 @@
             this.lblSelectOpt = new System.Windows.Forms.Label();
             this.btnPrint = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
-            this.RptView = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
+            this.rptView = new Microsoft.Reporting.WinForms.ReportViewer();
             this.panel1.SuspendLayout();
             this.grbPrintOpt.SuspendLayout();
             this.SuspendLayout();
@@ -112,18 +112,12 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // RptView
+            // rptView
             // 
-            this.RptView.AccessibleDescription = "";
-            this.RptView.ActiveViewIndex = -1;
-            this.RptView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.RptView.Cursor = System.Windows.Forms.Cursors.Default;
-            this.RptView.DisplayStatusBar = false;
-            this.RptView.Location = new System.Drawing.Point(3, 49);
-            this.RptView.Name = "RptView";
-            this.RptView.Size = new System.Drawing.Size(812, 433);
-            this.RptView.TabIndex = 4;
-            this.RptView.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;
+            this.rptView.Location = new System.Drawing.Point(3, 49);
+            this.rptView.Name = "rptView";
+            this.rptView.Size = new System.Drawing.Size(812, 433);
+            this.rptView.TabIndex = 4;
             // 
             // WinformPdfViewer
             // 
@@ -131,12 +125,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(815, 523);
             this.ControlBox = false;
-            this.Controls.Add(this.RptView);
+            this.Controls.Add(this.rptView);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnPrint);
             this.Controls.Add(this.panel1);
             this.Name = "WinformPdfViewer";
             this.Text = "PDF Viewer";
+            this.Load += new System.EventHandler(this.WinformPdfViewer_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.grbPrintOpt.ResumeLayout(false);
@@ -154,7 +149,7 @@
         internal System.Windows.Forms.Label lblSelectOpt;
         private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.Button btnExit;
-        private CrystalDecisions.Windows.Forms.CrystalReportViewer RptView;
+        private Microsoft.Reporting.WinForms.ReportViewer rptView;
 
 
     }

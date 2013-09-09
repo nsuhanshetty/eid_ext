@@ -272,7 +272,7 @@
             this.grbLangKnown.Controls.Add(this.lblToWrite);
             this.grbLangKnown.Controls.Add(this.txtRead);
             this.grbLangKnown.Controls.Add(this.lblToRead);
-            this.grbLangKnown.Location = new System.Drawing.Point(180, 224);
+            this.grbLangKnown.Location = new System.Drawing.Point(171, 224);
             this.grbLangKnown.Name = "grbLangKnown";
             this.grbLangKnown.Size = new System.Drawing.Size(569, 109);
             this.grbLangKnown.TabIndex = 103;
@@ -341,7 +341,7 @@
             this.grbPersonal.Controls.Add(this.lblFthrName);
             this.grbPersonal.Controls.Add(this.txtName);
             this.grbPersonal.Controls.Add(this.lblName);
-            this.grbPersonal.Location = new System.Drawing.Point(180, 6);
+            this.grbPersonal.Location = new System.Drawing.Point(171, 6);
             this.grbPersonal.Name = "grbPersonal";
             this.grbPersonal.Size = new System.Drawing.Size(569, 213);
             this.grbPersonal.TabIndex = 101;
@@ -585,7 +585,7 @@
             this.grbContact.Controls.Add(this.lblPresAdd);
             this.grbContact.Controls.Add(this.txtPermAdd);
             this.grbContact.Controls.Add(this.lblPermAdd);
-            this.grbContact.Location = new System.Drawing.Point(180, 339);
+            this.grbContact.Location = new System.Drawing.Point(171, 339);
             this.grbContact.Name = "grbContact";
             this.grbContact.Size = new System.Drawing.Size(569, 166);
             this.grbContact.TabIndex = 104;
@@ -1325,7 +1325,10 @@
             this.ClientSize = new System.Drawing.Size(1370, 645);
             this.Controls.Add(this.pnlUsrView);
             this.Controls.Add(this.tabControl1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "WinformEmpReg";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Employee Registry";
             this.Load += new System.EventHandler(this.WinformStaffDetail_Load);
@@ -1481,5 +1484,5 @@
         private System.Windows.Forms.Button btnEduQualClear;
         private System.Windows.Forms.Button btnOthrQualClear;
     }
-     
+
 }

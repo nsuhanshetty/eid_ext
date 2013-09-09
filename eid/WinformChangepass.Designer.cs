@@ -80,7 +80,7 @@
             // txtNew
             // 
             this.txtNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNew.Location = new System.Drawing.Point(173, 58);
+            this.txtNew.Location = new System.Drawing.Point(173, 55);
             this.txtNew.Name = "txtNew";
             this.txtNew.PasswordChar = '*';
             this.txtNew.Size = new System.Drawing.Size(306, 26);

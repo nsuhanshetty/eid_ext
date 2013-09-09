@@ -60,8 +60,8 @@
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ER_EMP_NAME" msprop:Generator_ColumnVarNameInTable="columnER_EMP_NAME" msprop:Generator_ColumnPropNameInRow="ER_EMP_NAME" msprop:Generator_ColumnPropNameInTable="ER_EMP_NAMEColumn" msprop:Generator_UserColumnName="ER_EMP_NAME" type="xs:string" minOccurs="0" />
-              <xs:element name="ER_EMP_NO" msprop:Generator_ColumnVarNameInTable="columnER_EMP_NO" msprop:Generator_ColumnPropNameInRow="ER_EMP_NO" msprop:Generator_ColumnPropNameInTable="ER_EMP_NOColumn" msprop:Generator_UserColumnName="ER_EMP_NO" type="xs:string" minOccurs="0" />
-              <xs:element name="ER_EMP_PIC" msprop:Generator_ColumnVarNameInTable="columnER_EMP_PIC" msprop:Generator_ColumnPropNameInRow="ER_EMP_PIC" msprop:Generator_ColumnPropNameInTable="ER_EMP_PICColumn" msprop:Generator_UserColumnName="ER_EMP_PIC" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="ER_EMP_NO" msprop:Generator_ColumnVarNameInTable="columnER_EMP_NO" msprop:Generator_ColumnPropNameInRow="ER_EMP_NO" msprop:Generator_ColumnPropNameInTable="ER_EMP_NOColumn" msprop:Generator_UserColumnName="ER_EMP_NO" type="xs:string" />
+              <xs:element name="ER_EMP_PIC" msprop:Generator_ColumnVarNameInTable="columnER_EMP_PIC" msprop:Generator_ColumnPropNameInRow="ER_EMP_PIC" msprop:Generator_ColumnPropNameInTable="ER_EMP_PICColumn" msprop:Generator_UserColumnName="ER_EMP_PIC" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -69,6 +69,10 @@
     </xs:complexType>
     <xs:unique name="Emp_No" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:dsBiodata" />
+      <xs:field xpath="mstns:ER_EMP_NO" />
+    </xs:unique>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:dsIdCard" />
       <xs:field xpath="mstns:ER_EMP_NO" />
     </xs:unique>
   </xs:element>
