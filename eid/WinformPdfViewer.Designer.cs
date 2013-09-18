@@ -130,6 +130,7 @@
             this.Controls.Add(this.btnPrint);
             this.Controls.Add(this.panel1);
             this.Name = "WinformPdfViewer";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PDF Viewer";
             this.Load += new System.EventHandler(this.WinformPdfViewer_Load);
             this.panel1.ResumeLayout(false);

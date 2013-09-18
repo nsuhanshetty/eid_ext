@@ -76,15 +76,18 @@ namespace eid
             InitializeComponent();
         }
 
-        #region 'PrivateAndProtectedmethods      
+        #region 'PrivateAndProtectedmethods
         private void WinformStaffDetail_Load(object sender, EventArgs e)
         {
             this.tabControl1.Visible = false;
             this.pnlUsrView.Visible = false;
 
             this.Location = new Point(this.Location.X + 300, this.Location.Y);
+
             pnlUsrView.Location = new Point(0, 75);
             this.Size = new Size(785, 683);
+            dgvView.Width += 150;
+            pnlUsrView.Width += 150;
 
             List<string> imageDir = new List<string> { EmpPicPath, DobPath, NoChildPath, PermAddPath, PresAddPath, EduQualPath, OthrQualPath };
             foreach (string imgPath in imageDir)
@@ -114,6 +117,7 @@ namespace eid
             this.tabControl1.Visible = false;
             this.pnlUsrView.Visible = true;
             txtEmpNo.ReadOnly = true;
+            //pnlUsrView.Scale(new SizeF(pnlUsrView.Width + 300, pnlUsrView.Height));
 
             lblMessage.Text = "Double Click the Employee Name to Modify the Employee Details.";
 

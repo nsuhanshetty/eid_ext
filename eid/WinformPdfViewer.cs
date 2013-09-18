@@ -10,7 +10,6 @@ namespace eid
     public partial class WinformPdfViewer : Form
     {
         ErrorDump ed = new ErrorDump();
-        //WinformReportViewer rpv = new WinformReportViewer();
         ImageResize imageResizer = new ImageResize();
         private string mEmpNo;
         public string EmpNo
@@ -63,8 +62,27 @@ namespace eid
                     qry += "where reg.ER_EMP_NO='" + EmpNo + "'";
 
                     dt = MysqlConn.getDataTable(qry);
-                    reportpath = Application.StartupPath + "\\Report\\Resume.rdlc";
-                    rptDataSource = new ReportDataSource("DsResume", (DataTable)ds._dsBiodata);
+
+                    dt.Columns.Add("TEMP_EMP_DOB", System.Type.GetType("System.String"));
+                    dt.Columns.Add("TEMP_EMP_NOCHILD", System.Type.GetType("System.String"));
+                    dt.Columns.Add("TEMP_EMP_DOM", System.Type.GetType("System.String")); 
+
+                    //alter ER_EMP_DOB  
+                    dt.Rows[0]["TEMP_EMP_DOB"] = Convert.ToDateTime(dt.Rows[0]["ER_EMP_DOB"]).ToString("dd/MM/yyyy"); 
+
+                    //alter ER_EMP_NOCHILD
+                    dt.Rows[0]["TEMP_EMP_NOCHILD"] = (DBNull.Value.Equals(dt.Rows[0]["ER_EMP_NOCHILD"])) ? "N/A" : dt.Rows[0]["ER_EMP_NOCHILD"].ToString();
+
+                    //alter ER_EMP_DOM
+                    dt.Rows[0]["TEMP_EMP_DOM"] = DBNull.Value.Equals(dt.Rows[0]["ER_EMP_DOM"])?"N/A":
+                        (Convert.ToDateTime(dt.Rows[0]["ER_EMP_DOM"]).ToString("dd/MM/yyyy"));
+
+                    //alter ER_WIFE_NAME
+                    dt.Rows[0]["ER_WIFE_NAME"] = (DBNull.Value.Equals(dt.Rows[0]["ER_WIFE_NAME"])) ? "N/A" : dt.Rows[0]["ER_WIFE_NAME"].ToString();
+
+                    ds._dsBiodata.Merge(dt);
+                    reportpath = Application.StartupPath + "\\Report\\repBiodata.rdlc";
+                    rptDataSource = new ReportDataSource("dsBiodata", (DataTable)ds._dsBiodata);
                 }
                 else
                 {
@@ -85,7 +103,6 @@ namespace eid
                 rptView.LocalReport.ReportPath = reportpath;
                 rptView.LocalReport.DisplayName = (rdbBiodata.Checked) ? "Resume" : "ID Card Print";
                 rptView.LocalReport.DataSources.Clear();
-                rptDataSource = new ReportDataSource("DataSet1", (DataTable)ds.dsIdCard);
                 rptView.LocalReport.DataSources.Add(rptDataSource);
                 rptView.LocalReport.EnableExternalImages = true;
                 rptView.RefreshReport();
@@ -108,7 +125,6 @@ namespace eid
 
         private void WinformPdfViewer_Load(object sender, EventArgs e)
         {
-
             this.rptView.RefreshReport();
         }
     }

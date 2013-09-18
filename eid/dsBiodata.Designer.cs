@@ -390,6 +390,12 @@ namespace eid {
             
             private global::System.Data.DataColumn columnER_EMP_PIC;
             
+            private global::System.Data.DataColumn columnTEMP_EMP_DOB;
+            
+            private global::System.Data.DataColumn columnTEMP_EMP_NOCHILD;
+            
+            private global::System.Data.DataColumn columnTEMP_EMP_DOM;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public dsBiodataDataTable() {
@@ -729,6 +735,30 @@ namespace eid {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn TEMP_EMP_DOBColumn {
+                get {
+                    return this.columnTEMP_EMP_DOB;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn TEMP_EMP_NOCHILDColumn {
+                get {
+                    return this.columnTEMP_EMP_NOCHILD;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn TEMP_EMP_DOMColumn {
+                get {
+                    return this.columnTEMP_EMP_DOM;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -802,7 +832,10 @@ namespace eid {
                         System.DateTime ER_EMP_DOM, 
                         string ER_WIFE_NAME, 
                         int ER_EMP_NOCHILD, 
-                        byte[] ER_EMP_PIC) {
+                        byte[] ER_EMP_PIC, 
+                        string TEMP_EMP_DOB, 
+                        string TEMP_EMP_NOCHILD, 
+                        string TEMP_EMP_DOM) {
                 dsBiodataRow rowdsBiodataRow = ((dsBiodataRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ER_EMP_NO,
@@ -842,7 +875,10 @@ namespace eid {
                         ER_EMP_DOM,
                         ER_WIFE_NAME,
                         ER_EMP_NOCHILD,
-                        ER_EMP_PIC};
+                        ER_EMP_PIC,
+                        TEMP_EMP_DOB,
+                        TEMP_EMP_NOCHILD,
+                        TEMP_EMP_DOM};
                 rowdsBiodataRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdsBiodataRow);
                 return rowdsBiodataRow;
@@ -910,6 +946,9 @@ namespace eid {
                 this.columnER_WIFE_NAME = base.Columns["ER_WIFE_NAME"];
                 this.columnER_EMP_NOCHILD = base.Columns["ER_EMP_NOCHILD"];
                 this.columnER_EMP_PIC = base.Columns["ER_EMP_PIC"];
+                this.columnTEMP_EMP_DOB = base.Columns["TEMP_EMP_DOB"];
+                this.columnTEMP_EMP_NOCHILD = base.Columns["TEMP_EMP_NOCHILD"];
+                this.columnTEMP_EMP_DOM = base.Columns["TEMP_EMP_DOM"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -991,6 +1030,12 @@ namespace eid {
                 base.Columns.Add(this.columnER_EMP_NOCHILD);
                 this.columnER_EMP_PIC = new global::System.Data.DataColumn("ER_EMP_PIC", typeof(byte[]), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnER_EMP_PIC);
+                this.columnTEMP_EMP_DOB = new global::System.Data.DataColumn("TEMP_EMP_DOB", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTEMP_EMP_DOB);
+                this.columnTEMP_EMP_NOCHILD = new global::System.Data.DataColumn("TEMP_EMP_NOCHILD", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTEMP_EMP_NOCHILD);
+                this.columnTEMP_EMP_DOM = new global::System.Data.DataColumn("TEMP_EMP_DOM", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTEMP_EMP_DOM);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Emp_No", new global::System.Data.DataColumn[] {
                                 this.columnER_EMP_NO}, true));
                 this.columnER_EMP_NO.AllowDBNull = false;
@@ -2028,6 +2073,54 @@ namespace eid {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string TEMP_EMP_DOB {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsBiodata.TEMP_EMP_DOBColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'TEMP_EMP_DOB\' in table \'dsBiodata\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsBiodata.TEMP_EMP_DOBColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string TEMP_EMP_NOCHILD {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsBiodata.TEMP_EMP_NOCHILDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'TEMP_EMP_NOCHILD\' in table \'dsBiodata\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsBiodata.TEMP_EMP_NOCHILDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string TEMP_EMP_DOM {
+                get {
+                    try {
+                        return ((string)(this[this.tabledsBiodata.TEMP_EMP_DOMColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'TEMP_EMP_DOM\' in table \'dsBiodata\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledsBiodata.TEMP_EMP_DOMColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsER_EMP_NAMENull() {
                 return this.IsNull(this.tabledsBiodata.ER_EMP_NAMEColumn);
             }
@@ -2468,6 +2561,42 @@ namespace eid {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetER_EMP_PICNull() {
                 this[this.tabledsBiodata.ER_EMP_PICColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTEMP_EMP_DOBNull() {
+                return this.IsNull(this.tabledsBiodata.TEMP_EMP_DOBColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTEMP_EMP_DOBNull() {
+                this[this.tabledsBiodata.TEMP_EMP_DOBColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTEMP_EMP_NOCHILDNull() {
+                return this.IsNull(this.tabledsBiodata.TEMP_EMP_NOCHILDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTEMP_EMP_NOCHILDNull() {
+                this[this.tabledsBiodata.TEMP_EMP_NOCHILDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTEMP_EMP_DOMNull() {
+                return this.IsNull(this.tabledsBiodata.TEMP_EMP_DOMColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTEMP_EMP_DOMNull() {
+                this[this.tabledsBiodata.TEMP_EMP_DOMColumn] = global::System.Convert.DBNull;
             }
         }
         
