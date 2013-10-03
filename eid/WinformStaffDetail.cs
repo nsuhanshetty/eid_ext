@@ -103,6 +103,7 @@ namespace eid
             MenuMode(this, false);
             this.tabControl1.Visible = true;
             this.pnlUsrView.Visible = false;
+            txtEmpNo.Enabled = true;
             txtEmpNo.Focus();
 
             //updating the status bar
@@ -113,11 +114,11 @@ namespace eid
         {
             //MenuMode(this, false);
             DeleteState = false;
+            PrintState = false;
             txtSrchEmpName.Text = "";
             this.tabControl1.Visible = false;
             this.pnlUsrView.Visible = true;
-            txtEmpNo.ReadOnly = true;
-            //pnlUsrView.Scale(new SizeF(pnlUsrView.Width + 300, pnlUsrView.Height));
+            txtEmpNo.Enabled = false;
 
             lblMessage.Text = "Double Click the Employee Name to Modify the Employee Details.";
 
@@ -139,6 +140,7 @@ namespace eid
 
         protected override void btnsave_Click(object sender, EventArgs e)
         {
+            string[] Dest_Image_ImagePath = { };
 
             if (rdbSingle.Checked == false && rdbMarried.Checked == false)
             {
@@ -146,70 +148,27 @@ namespace eid
                 return;
             }
 
-            List<string> check = new List<string> { "txtNoOfChildProof", "txtOthrQualProof" };
-
+            string val = txtEmpNo.Text;
+            List<string> exception_Control_List = new List<string> { "txtNoOfChildProof", "txtOthrQualProof" };
             if (rdbSingle.Checked == true)
             {
-                check.Add("txtWifeName");
-                check.Add("txtNoOfChild");
+                //list of controls not to be considered on check                
+                exception_Control_List.Add("txtWifeName");
+                exception_Control_List.Add("txtNoOfChild");
             }
 
             //check if textbox is empty or not
-            if (com.isempty(tabControl1, true, check) == true)
-            {
+            if (com.isempty(tabControl1, true, exception_Control_List) == true)
                 return;
-            }
-
-            string val = txtEmpNo.Text;
-
-            string[] DestPath = {   EmpPicPath + "\\_EmpPicPath_" + val + "" + EmpPicext,
-                                    DobPath + "\\_DobPath_" + val + "" + DOBext,
-                                    PermAddPath + "\\_PermAddpath_" + val + "" + PermAddext,
-                                    PresAddPath + "\\_PresAddPath_" + val + "" + PresAddext,
-                                    EduQualPath + "\\_EduQualPath_" + val + "" + EduQualext,
-                                    OthrQualPath + "\\_OthrQualPath_" + val + "" + OthrQualext,
-                                    NoChildPath + "\\_NoChildPath_" + val + "" + NOChildext
-                                };
-
-            //when image is captured and not uploaded.
-            if (pcbEmpImage.ImageLocation == null && pcbEmpImage.Image != null)
-            {
-                pcbEmpImage.Image.Save(EmpPicPath + "\\_EmpPicPath_" + val + "" + ".jpg");
-                pcbEmpImage.ImageLocation = EmpPicPath + "\\_EmpPicPath_" + val + "" + ".jpg";
-            }
-
-            string[] SourcePath = { pcbEmpImage.ImageLocation, txtDobProof.Text, txtPerAddressProof.Text, txtPresAddressProof.Text,
-                                      txtEduProof.Text, txtOthrQualProof.Text, txtNoOfChildProof.Text };
-
 
             List<string> StrocProcKey = new List<string> { "pER_EMP_NO", "pER_EMP_NAME", "pER_FATHER_NAME", "pER_EMP_DOB", "pER_EMP_READ", "pER_EMP_WRITE", "pER_EMP_SPEAK", "pER_EMP_PER_ADDRESS", "pER_EMP_PRES_ADDRESS", "pER_EMP_PHONE_NO", "pER_EMP_MOBILE_NO", "pER_EMP_EDU_QUAL", "pER_EMP_OTHR_QUAL", "pER_EMP_EXPERIENCE_SEC_SER", "pER_REF1_NAME", "pER_REF1_HOUSE_NO", "pER_REF1_STREET_NO", "pER_REF1_POST_OFFICE", "pER_REF1_DISTRICT", "pER_REF1_STATE", "pER_REF1_TELEPHONE", "pER_REF1_PINCODE", "pER_REF1_OCCUPATION", "pER_REF2_NAME", "pER_REF2_HOUSE_NO", "pER_REF2_STREET_NO", "pER_REF2_POST_OFFICE", "pER_REF2_DISTRICT", "pER_REF2_STATE", "pER_REF2_TELEPHONE", "pER_REF2_PINCODE", "pER_REF2_OCCUPATION", "pER_EMP_ABOUT", "pER_EMP_MARITAL_STATUS", "pER_EMP_DOM", "pER_WIFE_NAME", "pER_EMP_NOCHILD" };
 
-            List<object> StroProcVal = new List<object> { txtEmpNo.Text, txtName.Text, txtFthrName.Text, dtpDob.Value.ToString("yyyy-MM-dd"), txtRead.Text, txtWrite.Text, txtSpeak.Text, txtPermAdd.Text, txtPresAdd.Text, txtPhoneNo.Text, txtMobNo.Text, txtEduQual.Text, txtOthrQual.Text, txtExpInSec.Text, txtNameRef1.Text, txtHouseNoRef1.Text, txtStreetNoRef1.Text, txtPostOffRef1.Text, txtDistRef1.Text, txtStateRef1.Text, txtTeleRef1.Text, txtPincodeRef1.Text, txtOccRef1.Text, txtNameRef2.Text, txtHouseNoRef2.Text, txtStreetNoRef2.Text, txtPostOffRef2.Text, txtDistRef2.Text, txtStateRef2.Text, txtTeleRef2.Text, txtPincodeRef2.Text, txtOccRef2.Text, txtAbout.Text };
-
-            if (rdbSingle.Checked == true)
-            {
-                StroProcVal.Add("Single");
-                StroProcVal.Add(null);
-                StroProcVal.Add(null);
-                StroProcVal.Add(null);
-            }
-            else
-            {
-                StroProcVal.Add("Married");
-                StroProcVal.Add(dtpDom.Value.ToString("yyyy-MM-dd"));
-                StroProcVal.Add(txtWifeName.Text);
-                StroProcVal.Add(txtNoOfChild.Text);
-            }
-
-            StroProcVal.Add((User.UserId).ToString());
-            StroProcVal.Add(DateTime.Now.Date.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToString("HH:mm:ss"));
+            List<object> StroProcVal = new List<object> { txtEmpNo.Text, txtName.Text, txtFthrName.Text, dtpDob.Value.ToString("yyyy-MM-dd"), txtRead.Text, txtWrite.Text, txtSpeak.Text, txtPermAdd.Text, txtPresAdd.Text, txtPhoneNo.Text, txtMobNo.Text, txtEduQual.Text, txtOthrQual.Text, txtExpInSec.Text, txtNameRef1.Text, txtHouseNoRef1.Text, txtStreetNoRef1.Text, txtPostOffRef1.Text, txtDistRef1.Text, txtStateRef1.Text, txtTeleRef1.Text, txtPincodeRef1.Text, txtOccRef1.Text, txtNameRef2.Text, txtHouseNoRef2.Text, txtStreetNoRef2.Text, txtPostOffRef2.Text, txtDistRef2.Text, txtStateRef2.Text, txtTeleRef2.Text, txtPincodeRef2.Text, txtOccRef2.Text, txtAbout.Text, rdbMarried.Checked ? "Married" : "Single", rdbSingle.Checked ? null : dtpDom.Value.ToString("yyyy-MM-dd"), string.IsNullOrEmpty(txtWifeName.Text) ? null : txtWifeName.Text, string.IsNullOrEmpty(txtNoOfChild.Text) ? null : txtNoOfChild.Text, (User.UserId).ToString(), DateTime.Now.Date.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToString("HH:mm:ss") };
 
             if (UpdateState != true)
             {
                 StrocProcKey.Add("pER_CREATED_BY");
                 StrocProcKey.Add("pER_CREATED_ON");
-                //StroProcVal.Add((User.UserId).ToString());
-                //StroProcVal.Add(DateTime.Now.Date.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToString("HH:mm:ss"));
 
                 Dictionary<String, Object> dict = new Dictionary<String, Object>();
                 for (int i = 0; i < StroProcVal.Count; i++)
@@ -219,73 +178,28 @@ namespace eid
 
                 if (MysqlConn.dictionaryToTable(dict, "insert_Emp_Details") >= 1)
                 {
+                    updateStatus(this, "Values Saved");
 
-                    // make grpMarital empty
                     if (rdbSingle.Checked == true)
                         com.clearcontrol(grbMarital, true);
 
-                    //save all image file to respective folders 
-
-                    for (int i = 0; i <= DestPath.Length - 2; i++)
-                    {
-                        if (string.IsNullOrEmpty(SourcePath[i]) != true)
-                        {
-                            if (string.Equals(SourcePath[i], DestPath[i]) == false)
-                            {
-                                if (File.Exists(DestPath[i]) == true)
-                                    File.Delete(DestPath[i]);
-                                File.Copy(SourcePath[i], DestPath[i]);
-                            }
-                        }
-                        else
-                        {
-                            if (File.Exists(DestPath[i]) == true)
-                                File.Delete(DestPath[i]);
-                        }
-                    }
-
-                    if (rdbMarried.Checked == true && string.IsNullOrEmpty(txtNoOfChildProof.Text) != true)
-                    {
-                        if (File.Equals(txtNoOfChildProof.Text, DestPath[6]) == false)
-                        {
-                            if (File.Exists(DestPath[6]) == true)
-                                File.Delete(DestPath[6]);
-                            File.Copy(txtNoOfChildProof.Text, DestPath[6]);
-                        }
-                    }
-                    else if (string.IsNullOrEmpty(txtNoOfChildProof.Text) == true)
-                    {
-                        if (File.Exists(DestPath[6]))
-                            File.Delete(DestPath[6]);
-                    }
-
-
-                    //for (int i = 0; i <= DestPath.Length - 2; i++)
-                    //{
-                    //    if (string.IsNullOrEmpty(SourcePath[i]) != true)
-                    //        File.Copy(SourcePath[i], DestPath[i]);
-                    //}
-
-                    //if (rdbMarried.Checked == true && string.IsNullOrEmpty(txtNoOfChildProof.Text) != true)
-                    //{
-                    //    File.Copy(txtNoOfChildProof.Text, DestPath[5]);
-                    //}
+                    Dest_Image_ImagePath = transfer_Images(val);
 
                     qry = "insert into employee_proof(EP_EMP_NO, EP_EMP_PIC, EP_EMP_DOB_PROOF, EP_EMP_PER_ADDRESS_PROOF, EP_EMP_PRES_ADDRESS_PROOF, EP_EMP_EDU_QUAL_PROOF,EP_EMP_NOCHILD_PROOF,EP_EMP_OTHR_QUAL_PROOF) values ('" + txtEmpNo.Text + "',";
                     /*+DestPath[0].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "','" + DestPath[1].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "','" + DestPath[2].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "','" + DestPath[3].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "','" + DestPath[4].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
                     */
-                    for (int i = 0; i < DestPath.Length - 2; i++)
+                    for (int i = 0; i < Dest_Image_ImagePath.Length - 2; i++)
                     {
-                        qry += "'" + DestPath[i].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
+                        qry += "'" + Dest_Image_ImagePath[i].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
                     }
 
 
                     if ((rdbMarried.Checked == true) && (!string.IsNullOrEmpty(txtNoOfChildProof.Text)))
-                        qry += "'" + DestPath[6].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
+                        qry += "'" + Dest_Image_ImagePath[6].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
                     else
                         qry += "NULL,";
 
-                    qry += (string.IsNullOrEmpty(txtOthrQualProof.Text) == false) ? "'" + DestPath[5].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "')" : "NULL)";
+                    qry += (string.IsNullOrEmpty(txtOthrQualProof.Text) == false) ? "'" + Dest_Image_ImagePath[5].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "')" : "NULL)";
 
                     MysqlConn.executeQry(qry);
 
@@ -296,8 +210,6 @@ namespace eid
             {
                 StrocProcKey.Add("pER_MODIFIED_BY");
                 StrocProcKey.Add("pER_MODIFIED_ON");
-                //StroProcVal.Add((User.UserId).ToString());
-                //StroProcVal.Add(DateTime.Now.Date.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToString("HH:mm:ss"));
 
                 Dictionary<String, Object> dict = new Dictionary<String, Object>();
                 for (int i = 0; i < StroProcVal.Count; i++)
@@ -312,70 +224,31 @@ namespace eid
                         com.clearcontrol(grbMarital, true);
 
 
-                    //save all image file to respective folders if they are changed                    
-
-                    for (int i = 0; i <= DestPath.Length - 2; i++)
-                    {
-                        if (string.IsNullOrEmpty(SourcePath[i]) != true)
-                        {
-                            if (string.Equals(SourcePath[i], DestPath[i]) == false)
-                            {
-                                if (File.Exists(DestPath[i]) == true)
-                                    File.Delete(DestPath[i]);
-                                File.Copy(SourcePath[i], DestPath[i]);
-                            }
-                        }
-                        else
-                        {
-                            if (File.Exists(DestPath[i]) == true)
-                                File.Delete(DestPath[i]);
-                        }
-                    }
-
-                    if (rdbMarried.Checked == true && string.IsNullOrEmpty(txtNoOfChildProof.Text) != true)
-                    {
-                        if (File.Equals(txtNoOfChildProof.Text, DestPath[6]) == false)
-                        {
-                            if (File.Exists(DestPath[6]) == true)
-                                File.Delete(DestPath[6]);
-                            File.Copy(txtNoOfChildProof.Text, DestPath[6]);
-                        }
-                    }
-                    else if (string.IsNullOrEmpty(txtNoOfChildProof.Text) == true)
-                    {
-                        if (File.Exists(DestPath[6]))
-                            File.Delete(DestPath[6]);
-                    }
+                    Dest_Image_ImagePath = transfer_Images(val);
 
                     string[] updsource = { "EP_EMP_PIC", "EP_EMP_DOB_PROOF", "EP_EMP_PER_ADDRESS_PROOF", "EP_EMP_PRES_ADDRESS_PROOF", "EP_EMP_EDU_QUAL_PROOF" };
 
                     // qry = "update employee_proof set EP_EMP_PIC='" + DestPath[0].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_DOB_PROOF='" + DestPath[1].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_PER_ADDRESS_PROOF='" + DestPath[2].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_PRES_ADDRESS_PROOF='" + DestPath[3].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_EDU_QUAL_PROOF='" + DestPath[4].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
 
                     qry = "update employee_proof set ";
-
-                    for (int i = 0; i < DestPath.Length - 2; i++)
+                    for (int i = 0; i < Dest_Image_ImagePath.Length - 2; i++)
                     {
-                        qry += "" + updsource[i] + "='" + DestPath[i].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
+                        qry += "" + updsource[i] + "='" + Dest_Image_ImagePath[i].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
                     }
 
-                    if ((rdbMarried.Checked == true) && (!string.IsNullOrEmpty(txtNoOfChildProof.Text)))
-                        qry += "EP_EMP_NOCHILD_PROOF='" + DestPath[6].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
+                    if ((rdbMarried.Checked) && (!string.IsNullOrEmpty(txtNoOfChildProof.Text)))
+                        qry += "EP_EMP_NOCHILD_PROOF='" + Dest_Image_ImagePath[6].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
                     else
                         qry += "EP_EMP_NOCHILD_PROOF=NULL,";
 
-                    qry += (string.IsNullOrEmpty(txtOthrQualProof.Text) == false) ? "EP_EMP_OTHR_QUAL_PROOF='" + DestPath[5].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "'" : "EP_EMP_OTHR_QUAL_PROOF=NULL";
-
+                    qry += (string.IsNullOrEmpty(txtOthrQualProof.Text) == false) ? "EP_EMP_OTHR_QUAL_PROOF='" + Dest_Image_ImagePath[5].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "'" : "EP_EMP_OTHR_QUAL_PROOF=NULL";
                     qry += " where EP_EMP_NO='" + txtEmpNo.Text + "'";
-
                     MysqlConn.executeQry(qry);
-
                 }
+
                 txtEmpNo.Enabled = true;
                 UpdateState = false;
             }
-
-            //update the status
-            updateStatus(this, "Values Saved");
 
             //clear the form
             com.clearcontrol(tabControl1, true);
@@ -575,7 +448,6 @@ namespace eid
 
         private void dgvView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            this.Cursor = Cursors.WaitCursor;
             DialogResult dr;
 
             # region DeleteUser
@@ -602,7 +474,6 @@ namespace eid
 
                 updateStatus(this, "User Deleted");
                 LoadDGV();
-                this.Cursor = Cursors.Default;
                 return;
             }
             # endregion delete
@@ -613,7 +484,6 @@ namespace eid
                 WinformPdfViewer wfPdfView = new WinformPdfViewer(Convert.ToString(dgvView.Rows[e.RowIndex].Cells["ER_EMP_NO"].Value));
                 wfPdfView.Show();
                 this.Cursor = Cursors.Default;
-                //opn pdf in webbrowser
                 return;
             }
             # endregion PrintUser
@@ -687,6 +557,7 @@ namespace eid
                     if (File.Exists(myReader["EP_EMP_NOCHILD_PROOF"].ToString()))
                         txtNoOfChildProof.Text = (myReader["EP_EMP_NOCHILD_PROOF"].ToString());
                 }
+
                 pcbEmpImage.ImageLocation = (myReader["EP_EMP_PIC"].ToString());
                 txtDobProof.Text = (myReader["EP_EMP_DOB_PROOF"].ToString());
                 txtPerAddressProof.Text = (myReader["EP_EMP_PER_ADDRESS_PROOF"].ToString());
@@ -701,19 +572,16 @@ namespace eid
                 PresAddext = Path.GetExtension(txtPresAddressProof.Text);
                 EduQualext = Path.GetExtension(txtEduProof.Text);
 
-                if (string.IsNullOrEmpty(txtNoOfChildProof.Text) != true)
+                if (!string.IsNullOrEmpty(txtNoOfChildProof.Text))
                 {
                     NOChildext = Path.GetExtension(txtNoOfChildProof.Text);
                 }
 
-                if (string.IsNullOrEmpty(txtOthrQualProof.Text) != true)
+                if (!string.IsNullOrEmpty(txtOthrQualProof.Text))
                 {
                     OthrQualext = Path.GetExtension(txtOthrQualProof.Text);
                 }
             }
-
-            //select the userid and loadCheckBox
-            //    LoadCheckBox(Convert.ToString(dgvView[0, e.RowIndex].Value));
 
             //menustate close
             MenuMode(this, false);
@@ -727,8 +595,6 @@ namespace eid
             UpdateState = true;
             this.Cursor = Cursors.Default;
             # endregion ModifyUser
-
-
         }
 
         private void btnClear(object sender, EventArgs e)
@@ -759,6 +625,85 @@ namespace eid
                     break;
             }
         }
+
+        /// <summary>
+        /// val has the Employee Id
+        /// /*save all image file to respective folders 
+        /// if file doesnot exist 
+        /// add new file    
+        /// else
+        /// delete previous and add add new 
+        /// else if pres is empty and prev file exist
+        /// delete prev*/
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns>list of transferred files path</returns>
+        private string[] transfer_Images(string val)
+        {
+            //when image is captured and not uploaded.
+            if (pcbEmpImage.ImageLocation == null || pcbEmpImage.Image != null || File.Exists(pcbEmpImage.ImageLocation))
+            {
+                pcbEmpImage.Image.Save(EmpPicPath      + "\\_EmpPicPath_" + val + "" + ".jpg");
+                pcbEmpImage.ImageLocation = EmpPicPath + "\\_EmpPicPath_" + val + "" + ".jpg";
+            }
+
+            string[] Source_Image_ImagePath = 
+            {
+                pcbEmpImage.ImageLocation, txtDobProof.Text, 
+                txtPerAddressProof.Text  , txtPresAddressProof.Text,
+                txtEduProof.Text         , txtOthrQualProof.Text, txtNoOfChildProof.Text
+            };
+
+            string[] Dest_Image_ImagePath = 
+            {  
+                EmpPicPath   + "\\EmpPicPath_"   + val + "" + EmpPicext,
+                DobPath      + "\\DobPath_"      + val + "" + DOBext,
+                PermAddPath  + "\\PermAddpath_"  + val + "" + PermAddext,
+                PresAddPath  + "\\PresAddPath_"  + val + "" + PresAddext,
+                EduQualPath  + "\\EduQualPath_"  + val + "" + EduQualext,
+                OthrQualPath + "\\OthrQualPath_" + val + "" + OthrQualext,
+                NoChildPath  + "\\NoChildPath_"  + val + "" + NOChildext
+            };
+
+            for (int i = 0; i <= Dest_Image_ImagePath.Length - 2; i++)
+            {
+                if (!string.IsNullOrEmpty(Source_Image_ImagePath[i]))
+                {
+                    if (!File.Exists(Dest_Image_ImagePath[i]))
+                        //add new file
+                        File.Copy(Source_Image_ImagePath[i], Dest_Image_ImagePath[i]);
+
+                    else if (string.Equals(Source_Image_ImagePath[i], Dest_Image_ImagePath[i]) == false && (File.Exists(Dest_Image_ImagePath[i])))
+                    {
+                        //update the file
+                        File.Delete(Dest_Image_ImagePath[i]);
+                        File.Copy(Source_Image_ImagePath[i], Dest_Image_ImagePath[i]);
+                    }
+                }
+
+                else if (string.IsNullOrEmpty(Source_Image_ImagePath[i]) && File.Exists(Dest_Image_ImagePath[i]))
+                    File.Delete(Dest_Image_ImagePath[i]);
+            }
+
+            if (rdbMarried.Checked == true && string.IsNullOrEmpty(txtNoOfChildProof.Text) != true)
+            {
+                if (!File.Exists(Dest_Image_ImagePath[6]))
+                    //add new file
+                    File.Copy(Source_Image_ImagePath[6], Dest_Image_ImagePath[6]);
+
+                else if (File.Equals(Source_Image_ImagePath[6], Dest_Image_ImagePath[6]) == false && File.Exists(Dest_Image_ImagePath[6]))
+                {
+                    //update the file
+                    File.Delete(Dest_Image_ImagePath[6]);
+                    File.Copy(txtNoOfChildProof.Text, Dest_Image_ImagePath[6]);
+                }
+            }
+            else if (string.IsNullOrEmpty(Source_Image_ImagePath[6]) && File.Exists(Dest_Image_ImagePath[6]))
+                File.Delete(Dest_Image_ImagePath[6]);
+         
+            return Dest_Image_ImagePath;
+        }
+
         #endregion ViewFunctionMethods
 
         #endregion 'PrivateAndProtectedMethods

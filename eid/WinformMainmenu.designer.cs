@@ -44,7 +44,6 @@
             this.ChangePasswordAccess = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.BackupDataAccess = new System.Windows.Forms.ToolStripMenuItem();
-            this.RestoreDataAccess = new System.Windows.Forms.ToolStripMenuItem();
             this.HelptoolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.UpdatetoolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
@@ -108,8 +107,7 @@
             this.UserMasterAccess,
             this.ChangePasswordAccess,
             this.toolStripSeparator10,
-            this.BackupDataAccess,
-            this.RestoreDataAccess});
+            this.BackupDataAccess});
             this.Utilities.Enabled = false;
             this.Utilities.Name = "Utilities";
             this.Utilities.Size = new System.Drawing.Size(58, 20);
@@ -167,14 +165,6 @@
             this.BackupDataAccess.Size = new System.Drawing.Size(188, 38);
             this.BackupDataAccess.Text = "&Backup Data";
             // 
-            // RestoreDataAccess
-            // 
-            this.RestoreDataAccess.Image = ((System.Drawing.Image)(resources.GetObject("RestoreDataAccess.Image")));
-            this.RestoreDataAccess.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.RestoreDataAccess.Name = "RestoreDataAccess";
-            this.RestoreDataAccess.Size = new System.Drawing.Size(188, 38);
-            this.RestoreDataAccess.Text = "&Restore Data";
-            // 
             // HelptoolStripMenuItem1
             // 
             this.HelptoolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -184,7 +174,6 @@
             this.HelptoolStripMenuItem1.Name = "HelptoolStripMenuItem1";
             this.HelptoolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
             this.HelptoolStripMenuItem1.Text = "&Help";
-            this.HelptoolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // UpdatetoolStripMenuItem2
             // 
@@ -251,6 +240,7 @@
             this.Text = "Main Menu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.WinformMainmenu_Load);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
             this.Mainmenustrip.ResumeLayout(false);
             this.Mainmenustrip.PerformLayout();
             this.ToolStrip1.ResumeLayout(false);
@@ -275,7 +265,6 @@
         internal System.Windows.Forms.ToolStripMenuItem ChangePasswordAccess;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         internal System.Windows.Forms.ToolStripMenuItem BackupDataAccess;
-        internal System.Windows.Forms.ToolStripMenuItem RestoreDataAccess;
         internal System.Windows.Forms.ToolStripMenuItem HelptoolStripMenuItem1;
         internal System.Windows.Forms.ToolStripMenuItem UpdatetoolStripMenuItem2;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
@@ -283,7 +272,7 @@
         internal System.Windows.Forms.ToolStripMenuItem Exitmenu;
         internal System.Windows.Forms.ToolStrip ToolStrip1;
         internal System.Windows.Forms.ToolStripButton Loginbtn;
-        
+
     }
 }
 

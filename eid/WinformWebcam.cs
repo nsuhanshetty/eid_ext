@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using WCC;
 
@@ -26,7 +21,7 @@ namespace eid
         {
             Bitmap fimage = imgcap();
             wfempreg.pcbEmpImage.Image = fimage;
-            wfempreg.btnCapture.Enabled = true;            
+            wfempreg.btnCapture.Enabled = true;
             this.Close();
         }
 
@@ -46,7 +41,7 @@ namespace eid
             picCapture.Image = null;
             cmbCameraSelect.Items.Add(objwcc.LoadDeviceList().ToString());
             cmbCameraSelect.SelectedIndex = 0;
-            objwcc.OpenPreviewWindow(picCapture.Height, picCapture.Width, long.Parse(picCapture.Handle.ToString()));            
+            objwcc.OpenPreviewWindow(picCapture.Height, picCapture.Width, long.Parse(picCapture.Handle.ToString()));
             timer1.Start();
         }
 
@@ -54,10 +49,14 @@ namespace eid
         {
             //if (f % 2 == 0)
             //{
-             fimage = imgcap();
+            fimage = imgcap();
             //}
             //f = f + 1;        
         }
+
+
+
+
 
 
 

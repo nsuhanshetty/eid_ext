@@ -35,9 +35,11 @@ namespace eid
                         RadioButton rdb = (RadioButton)ctrol;
                         rdb.Checked = false;
                         break;
+
                     case "pcb":
                         PictureBox pcb = (PictureBox)ctrol;
                         pcb.ImageLocation = null;
+                        pcb.Image = null;
                         break;
                 }
 

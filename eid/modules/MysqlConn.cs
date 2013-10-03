@@ -28,7 +28,7 @@ namespace eid
             try
             {
                 string connectionstring = "Server=127.0.0.1;userid=sa;password=sshetty;Database=privateeyeeid;";
-               // string connectiostring = "server=127.0.0.1;uid=root;pwd=12345;database=test;";
+                // string connectiostring = "server=127.0.0.1;uid=root;pwd=12345;database=test;";
 
                 MySqlConnection conn = new MySqlConnection(connectionstring);
                 // Dim conn As New MySqlConnection("Data source=" & datasource & ";Database=" & dbname & ";userid=" & dbuserid & ";password=" & dbpwd & ";");
@@ -81,7 +81,7 @@ namespace eid
             {
                 DataSet ds = new DataSet();
                 MySqlCommand cmd = new MySqlCommand(qry, getCon());
-                MySqlDataAdapter adptr = new MySqlDataAdapter(cmd);               
+                MySqlDataAdapter adptr = new MySqlDataAdapter(cmd);
                 adptr.Fill(ds);
                 cmd.Connection.Close();
                 cmd.Dispose();
@@ -109,7 +109,7 @@ namespace eid
             {
                 object obj = new object();
                 MySqlCommand cmd = new MySqlCommand(qry, getCon());
-                obj= cmd.ExecuteScalar();
+                obj = cmd.ExecuteScalar();
                 cmd.Connection.Close();
                 cmd.Dispose();
                 return obj;
@@ -131,38 +131,38 @@ namespace eid
 
         }
 
-        public static int dictionaryToTable( Dictionary<String, Object> dict , String QryName)  
-         {
-        try
+        public static int dictionaryToTable(Dictionary<String, Object> dict, String QryName)
         {
-            int Count;
-            StringBuilder Sb =new  StringBuilder();
-            MySqlCommand cmd = new MySqlCommand(QryName);
-            cmd.CommandType = CommandType.StoredProcedure;            
-            cmd.Connection = getCon();
-             foreach ( KeyValuePair<String, Object> keyval in dict)
+            try
             {
-                cmd.Parameters.AddWithValue("@" + keyval.Key, keyval.Value);
+                int Count;
+                StringBuilder Sb = new StringBuilder();
+                MySqlCommand cmd = new MySqlCommand(QryName);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = getCon();
+                foreach (KeyValuePair<String, Object> keyval in dict)
+                {
+                    cmd.Parameters.AddWithValue("@" + keyval.Key, keyval.Value);
+                }
+                Count = cmd.ExecuteNonQuery();
+                cmd.Connection.Close();
+                cmd.Dispose();
+                return Count;
             }
-             Count = cmd.ExecuteNonQuery();
-             cmd.Connection.Close();
-             cmd.Dispose();
-             return Count;
-        }
-        catch (MySqlException ex)
+            catch (MySqlException ex)
             {
                 //write Error Log with ex as explaination
-            ed.WriteToSQLErrorLog(ErrorDump.ErrorDumpErrorLogType.Critical, ex, "Database Error, Check the DictionaryToTable.");
-            ex.Data.Clear();
-            return 0;
+                ed.WriteToSQLErrorLog(ErrorDump.ErrorDumpErrorLogType.Critical, ex, "Database Error, Check the DictionaryToTable.");
+                ex.Data.Clear();
+                return 0;
             }
-        catch (Exception ex)
-        {
-            //write Error Log with ex as explaination
-            ed.WriteToErrorLog(ErrorDump.ErrorDumpErrorLogType.Critical, ex, "Database Error, Check the DataReader.");
-            ex.Data.Clear();
-            return 0;
-        }
+            catch (Exception ex)
+            {
+                //write Error Log with ex as explaination
+                ed.WriteToErrorLog(ErrorDump.ErrorDumpErrorLogType.Critical, ex, "Database Error, Check the DataReader.");
+                ex.Data.Clear();
+                return 0;
+            }
         }
 
         public static int executeQry(String Qry)
@@ -171,7 +171,7 @@ namespace eid
             {
                 int Count;
                 MySqlCommand cmd = new MySqlCommand(Qry, getCon());
-                Count= cmd.ExecuteNonQuery();
+                Count = cmd.ExecuteNonQuery();
                 cmd.Connection.Close();
                 cmd.Dispose();
                 return Count;

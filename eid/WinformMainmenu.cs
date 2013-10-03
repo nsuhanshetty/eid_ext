@@ -32,6 +32,12 @@ namespace eid
             childForm.Show();
         }
 
+        private void frmMain_KeyDown(Object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.L)
+                Loginbtn_Click(sender, e);
+        }
+
         private void OpenFile(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -90,12 +96,7 @@ namespace eid
         private void AboutustoolStripMenuItem3_Click(object sender, EventArgs e)
         {
             //WinformAboutus WinformAboutus = new WinformAboutus();
-           // WinformAboutus.Show();
-        }
-
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-
+            // WinformAboutus.Show();
         }
 
         private void CalculatorAccess_Click(object sender, EventArgs e)
@@ -123,8 +124,8 @@ namespace eid
 
         private void WinformMainmenu_Load(object sender, EventArgs e)
         {
-           // Winformlogin login = new Winformlogin();
-           // login.Show();            
+            // Winformlogin login = new Winformlogin();
+            // login.Show();            
         }
 
         private void ChangePasswordAccess_Click(object sender, EventArgs e)
