@@ -37,7 +37,6 @@
             this.Master = new System.Windows.Forms.ToolStripMenuItem();
             this.Staffdetails = new System.Windows.Forms.ToolStripMenuItem();
             this.Utilities = new System.Windows.Forms.ToolStripMenuItem();
-            this.OfficeDetailsAccess = new System.Windows.Forms.ToolStripMenuItem();
             this.CalculatorAccess = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.UserMasterAccess = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,7 +100,6 @@
             // Utilities
             // 
             this.Utilities.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.OfficeDetailsAccess,
             this.CalculatorAccess,
             this.toolStripSeparator9,
             this.UserMasterAccess,
@@ -113,14 +111,6 @@
             this.Utilities.Size = new System.Drawing.Size(58, 20);
             this.Utilities.Text = "&Utilities";
             // 
-            // OfficeDetailsAccess
-            // 
-            this.OfficeDetailsAccess.Image = ((System.Drawing.Image)(resources.GetObject("OfficeDetailsAccess.Image")));
-            this.OfficeDetailsAccess.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.OfficeDetailsAccess.Name = "OfficeDetailsAccess";
-            this.OfficeDetailsAccess.Size = new System.Drawing.Size(188, 38);
-            this.OfficeDetailsAccess.Text = "&Office Details";
-            // 
             // CalculatorAccess
             // 
             this.CalculatorAccess.Image = ((System.Drawing.Image)(resources.GetObject("CalculatorAccess.Image")));
@@ -128,6 +118,7 @@
             this.CalculatorAccess.Name = "CalculatorAccess";
             this.CalculatorAccess.Size = new System.Drawing.Size(188, 38);
             this.CalculatorAccess.Text = "&Calculator";
+            this.CalculatorAccess.Click += new System.EventHandler(this.CalculatorAccess_Click_1);
             // 
             // toolStripSeparator9
             // 
@@ -258,7 +249,6 @@
         internal System.Windows.Forms.ToolStripMenuItem Master;
         internal System.Windows.Forms.ToolStripMenuItem Staffdetails;
         internal System.Windows.Forms.ToolStripMenuItem Utilities;
-        internal System.Windows.Forms.ToolStripMenuItem OfficeDetailsAccess;
         internal System.Windows.Forms.ToolStripMenuItem CalculatorAccess;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         internal System.Windows.Forms.ToolStripMenuItem UserMasterAccess;

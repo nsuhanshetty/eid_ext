@@ -135,5 +135,10 @@ namespace eid
         }
 
         #endregion 'PrivateMethods
+
+        private void CalculatorAccess_Click_1(object sender, EventArgs e)
+        {
+            Process.Start("calc.exe");
+        }
     }
 }
