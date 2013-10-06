@@ -436,7 +436,7 @@
             this.dtpDom.Name = "dtpDom";
             this.dtpDom.Size = new System.Drawing.Size(138, 20);
             this.dtpDom.TabIndex = 8;
-            this.dtpDom.Value = new System.DateTime(2013, 5, 21, 8, 15, 0, 0);
+            this.dtpDom.Value = new System.DateTime(2013, 10, 5, 0, 0, 0, 0);
             // 
             // lblDom
             // 
@@ -515,7 +515,7 @@
             this.dtpDob.Name = "dtpDob";
             this.dtpDob.Size = new System.Drawing.Size(151, 20);
             this.dtpDob.TabIndex = 3;
-            this.dtpDob.Value = new System.DateTime(2013, 5, 21, 8, 15, 0, 0);
+            this.dtpDob.Value = new System.DateTime(2013, 10, 5, 0, 0, 0, 0);
             // 
             // txtDobProof
             // 
@@ -654,7 +654,7 @@
             // txtMobNo
             // 
             this.txtMobNo.Location = new System.Drawing.Point(102, 137);
-            this.txtMobNo.MaxLength = 10;
+            this.txtMobNo.MaxLength = 14;
             this.txtMobNo.Name = "txtMobNo";
             this.txtMobNo.Size = new System.Drawing.Size(196, 20);
             this.txtMobNo.TabIndex = 23;
@@ -769,6 +769,7 @@
             // txtAbout
             // 
             this.txtAbout.Location = new System.Drawing.Point(105, 437);
+            this.txtAbout.MaxLength = 150;
             this.txtAbout.Multiline = true;
             this.txtAbout.Name = "txtAbout";
             this.txtAbout.Size = new System.Drawing.Size(472, 63);
@@ -1154,9 +1155,10 @@
             // txtExpInSec
             // 
             this.txtExpInSec.Location = new System.Drawing.Point(105, 107);
+            this.txtExpInSec.MaxLength = 150;
             this.txtExpInSec.Multiline = true;
             this.txtExpInSec.Name = "txtExpInSec";
-            this.txtExpInSec.Size = new System.Drawing.Size(187, 45);
+            this.txtExpInSec.Size = new System.Drawing.Size(380, 45);
             this.txtExpInSec.TabIndex = 31;
             // 
             // btnOthrQualProof
@@ -1325,6 +1327,7 @@
             this.ClientSize = new System.Drawing.Size(1370, 645);
             this.Controls.Add(this.pnlUsrView);
             this.Controls.Add(this.tabControl1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WinformEmpReg";

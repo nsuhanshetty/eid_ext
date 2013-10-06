@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
 namespace eid
 {
@@ -107,13 +108,13 @@ namespace eid
         private void Loginbtn_Click(object sender, EventArgs e)
         {
             Winformlogin wfLogin = new Winformlogin(this);
-            wfLogin.Show();
+            wfLogin.ShowDialog();
         }
 
         private void Staffdetails_Click(object sender, EventArgs e)
         {
             WinformEmpReg wfEmpReg = new WinformEmpReg();
-            wfEmpReg.Show();
+            wfEmpReg.ShowDialog();
         }
 
         private void UserMasterAccess_Click(object sender, EventArgs e)
@@ -131,14 +132,50 @@ namespace eid
         private void ChangePasswordAccess_Click(object sender, EventArgs e)
         {
             WinformChangepass wfChangepass = new WinformChangepass();
-            wfChangepass.Show();
+            wfChangepass.ShowDialog();
         }
-
-        #endregion 'PrivateMethods
 
         private void CalculatorAccess_Click_1(object sender, EventArgs e)
         {
             Process.Start("calc.exe");
+        }
+
+        private void BackupDataAccess_Click(object sender, EventArgs e)
+        {
+            #region savedialog_property
+            saveFileDialog1.Title = "BacK Up Dialog";
+            saveFileDialog1.Filter = "SQL Files (*.sql)|*.sql";
+            saveFileDialog1.FileName = "Backup" + DateTime.Now.ToString("dd-MM-yyyy");
+            #endregion savedialog_property
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            string path = saveFileDialog1.FileName;
+            if (path != "")
+            {
+                Process myProcess = new Process();
+                myProcess.StartInfo.FileName = "cmd.exe";
+                myProcess.StartInfo.UseShellExecute = false;
+                myProcess.StartInfo.WorkingDirectory = Application.StartupPath;
+                myProcess.StartInfo.RedirectStandardInput = true;
+                myProcess.StartInfo.RedirectStandardOutput = true;
+                myProcess.Start();
+                StreamWriter myStreamWriter = myProcess.StandardInput;
+                StreamReader mystreamreader = myProcess.StandardOutput;
+                myStreamWriter.WriteLine("mysqldump -u sa -psshetty --databases=privateeyeeid>" + path);
+                myStreamWriter.Close();
+                myProcess.WaitForExit();
+                myProcess.Close();
+            }
+            else
+                MessageBox.Show("No Values Found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+        #endregion 'PrivateMethods
+
+        private void UpdatetoolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

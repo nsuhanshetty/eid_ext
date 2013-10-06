@@ -32,6 +32,7 @@ namespace eid
         public WinformPdfViewer(string EmpNo)
         {
             InitializeComponent();
+            btnPrint.Enabled = false;
             this.EmpNo = EmpNo;
         }
 
@@ -105,7 +106,9 @@ namespace eid
                 rptView.LocalReport.DataSources.Clear();
                 rptView.LocalReport.DataSources.Add(rptDataSource);
                 rptView.LocalReport.EnableExternalImages = true;
+                rptView.PrinterSettings.MaximumPage = 1;
                 rptView.RefreshReport();
+                btnPrint.Enabled = true;
                 this.Cursor = Cursors.Default;
             }
             catch (Exception ex)
@@ -116,11 +119,13 @@ namespace eid
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            // Print the document now that it is fully loaded.
-            ((WebBrowser)sender).Print();
+            rptView.PrintDialog();
 
-            // Dispose the WebBrowser now that the task is complete. 
-            ((WebBrowser)sender).Dispose();
+            //// Print the document now that it is fully loaded.
+            //((WebBrowser)sender).Print();
+
+            //// Dispose the WebBrowser now that the task is complete. 
+            //((WebBrowser)sender).Dispose();
         }
 
         private void WinformPdfViewer_Load(object sender, EventArgs e)

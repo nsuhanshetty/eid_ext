@@ -22,6 +22,7 @@ namespace eid
         WinformAbstract wfAbs = new WinformAbstract();
         WinformMainmenu wfMain = new WinformMainmenu();
 
+        #region pathini
         string EmpPicPath = Application.StartupPath + ConfigurationManager.AppSettings["EmpPicProof"];
         string DobPath = Application.StartupPath + ConfigurationManager.AppSettings["DOBProof"];
         string NoChildPath = Application.StartupPath + ConfigurationManager.AppSettings["NoChild"];
@@ -29,6 +30,7 @@ namespace eid
         string PresAddPath = Application.StartupPath + ConfigurationManager.AppSettings["PresAdd"];
         string EduQualPath = Application.StartupPath + ConfigurationManager.AppSettings["EduQual"];
         string OthrQualPath = Application.StartupPath + ConfigurationManager.AppSettings["OthrQual"];
+        #endregion pathini
 
         private bool mdelete;
         private bool DeleteState
@@ -293,7 +295,7 @@ namespace eid
         private void btnCapture_Click(object sender, EventArgs e)
         {
             WinformWebcam wfWebcam = new WinformWebcam(this);
-            wfWebcam.Show();
+            wfWebcam.ShowDialog();
         }
         # endregion FunctionMethods
 
@@ -384,7 +386,7 @@ namespace eid
         }
         #endregion ValidationMethods
 
-        #region ViewFunctionMethods
+        #region ViewModule_Methods
         private void LoadDGV()
         {
             //load the datagrid
@@ -482,7 +484,7 @@ namespace eid
             if (PrintState && e.RowIndex != -1)
             {
                 WinformPdfViewer wfPdfView = new WinformPdfViewer(Convert.ToString(dgvView.Rows[e.RowIndex].Cells["ER_EMP_NO"].Value));
-                wfPdfView.Show();
+                wfPdfView.ShowDialog();
                 this.Cursor = Cursors.Default;
                 return;
             }
@@ -704,7 +706,7 @@ namespace eid
             return Dest_Image_ImagePath;
         }
 
-        #endregion ViewFunctionMethods
+        #endregion ViewModule_Methods
 
         #endregion 'PrivateAndProtectedMethods
     }

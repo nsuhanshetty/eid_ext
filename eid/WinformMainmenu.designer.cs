@@ -50,6 +50,7 @@
             this.Exitmenu = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStrip1 = new System.Windows.Forms.ToolStrip();
             this.Loginbtn = new System.Windows.Forms.ToolStripButton();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.Mainmenustrip.SuspendLayout();
             this.ToolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -155,6 +156,7 @@
             this.BackupDataAccess.Name = "BackupDataAccess";
             this.BackupDataAccess.Size = new System.Drawing.Size(188, 38);
             this.BackupDataAccess.Text = "&Backup Data";
+            this.BackupDataAccess.Click += new System.EventHandler(this.BackupDataAccess_Click);
             // 
             // HelptoolStripMenuItem1
             // 
@@ -174,6 +176,7 @@
             this.UpdatetoolStripMenuItem2.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
             this.UpdatetoolStripMenuItem2.Size = new System.Drawing.Size(174, 38);
             this.UpdatetoolStripMenuItem2.Text = "&Update";
+            this.UpdatetoolStripMenuItem2.Click += new System.EventHandler(this.UpdatetoolStripMenuItem2_Click);
             // 
             // toolStripSeparator12
             // 
@@ -262,6 +265,7 @@
         internal System.Windows.Forms.ToolStripMenuItem Exitmenu;
         internal System.Windows.Forms.ToolStrip ToolStrip1;
         internal System.Windows.Forms.ToolStripButton Loginbtn;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 
     }
 }
