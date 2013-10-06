@@ -93,7 +93,7 @@ namespace eid
                     dt = MysqlConn.getDataTable(qry);
 
                     dt.Columns.Add("ER_EMP_PIC", System.Type.GetType("System.String"));
-                    dt.Rows[0]["ER_EMP_PIC"] = "file:///" + Convert.ToString(dt.Rows[0]["EP_EMP_PIC"]) + ".jpg";
+                    dt.Rows[0]["ER_EMP_PIC"] = "file:///" + Convert.ToString(dt.Rows[0]["EP_EMP_PIC"]);
                     dt.Columns.Remove("EP_EMP_PIC");
                     ds.dsIdCard.Merge(dt);
                     reportpath = Application.StartupPath + "\\Report\\IDCard.rdlc";

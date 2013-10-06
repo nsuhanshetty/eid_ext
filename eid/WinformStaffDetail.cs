@@ -11,7 +11,7 @@ namespace eid
     public partial class WinformEmpReg : WinformAbstract
     {
         #region 'PropertiesAndVariables
-        string qry = "", EmpPicext, DOBext, NOChildext, PermAddext, PresAddext, EduQualext, OthrQualext;
+        string qry = "", EmpPicext = ".JPG", DOBext, NOChildext, PermAddext, PresAddext, EduQualext, OthrQualext;
 
         Common com = new Common();
         ErrorDump ed = new ErrorDump();
@@ -227,6 +227,8 @@ namespace eid
 
 
                     Dest_Image_ImagePath = transfer_Images(val);
+                    if (Path.GetExtension(Dest_Image_ImagePath[0]) == "")
+                        Dest_Image_ImagePath[0] = Dest_Image_ImagePath[0] + ".jpg";
 
                     string[] updsource = { "EP_EMP_PIC", "EP_EMP_DOB_PROOF", "EP_EMP_PER_ADDRESS_PROOF", "EP_EMP_PRES_ADDRESS_PROOF", "EP_EMP_EDU_QUAL_PROOF" };
 
@@ -645,7 +647,7 @@ namespace eid
             //when image is captured and not uploaded.
             if (pcbEmpImage.ImageLocation == null || pcbEmpImage.Image != null || File.Exists(pcbEmpImage.ImageLocation))
             {
-                pcbEmpImage.Image.Save(EmpPicPath      + "\\_EmpPicPath_" + val + "" + ".jpg");
+                pcbEmpImage.Image.Save(EmpPicPath + "\\_EmpPicPath_" + val + "" + ".jpg");
                 pcbEmpImage.ImageLocation = EmpPicPath + "\\_EmpPicPath_" + val + "" + ".jpg";
             }
 
@@ -702,7 +704,7 @@ namespace eid
             }
             else if (string.IsNullOrEmpty(Source_Image_ImagePath[6]) && File.Exists(Dest_Image_ImagePath[6]))
                 File.Delete(Dest_Image_ImagePath[6]);
-         
+
             return Dest_Image_ImagePath;
         }
 
