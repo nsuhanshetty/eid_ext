@@ -34,8 +34,6 @@
             this.NewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ModifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ImportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ExportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.PrintToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -85,8 +83,6 @@
             this.NewToolStripMenuItem,
             this.ModifyToolStripMenuItem,
             this.DeleteToolStripMenuItem,
-            this.ImportToolStripMenuItem,
-            this.ExportToolStripMenuItem,
             this.ToolStripSeparator3,
             this.PrintToolStripMenuItem,
             this.ToolStripSeparator1,
@@ -100,60 +96,48 @@
             // 
             this.NewToolStripMenuItem.Name = "NewToolStripMenuItem";
             this.NewToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.NewToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.NewToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.NewToolStripMenuItem.Text = "&New";
+            this.NewToolStripMenuItem.Click += new System.EventHandler(this.btnnew_Click);
             // 
             // ModifyToolStripMenuItem
             // 
             this.ModifyToolStripMenuItem.Name = "ModifyToolStripMenuItem";
             this.ModifyToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.ModifyToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.ModifyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ModifyToolStripMenuItem.Text = "&Modify";
+            this.ModifyToolStripMenuItem.Click += new System.EventHandler(this.btnmodify_Click);
             // 
             // DeleteToolStripMenuItem
             // 
             this.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
             this.DeleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.DeleteToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.DeleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.DeleteToolStripMenuItem.Text = "&Delete";
-            // 
-            // ImportToolStripMenuItem
-            // 
-            this.ImportToolStripMenuItem.Name = "ImportToolStripMenuItem";
-            this.ImportToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
-                        | System.Windows.Forms.Keys.I)));
-            this.ImportToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.ImportToolStripMenuItem.Text = "&Import ";
-            // 
-            // ExportToolStripMenuItem
-            // 
-            this.ExportToolStripMenuItem.Name = "ExportToolStripMenuItem";
-            this.ExportToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
-                        | System.Windows.Forms.Keys.E)));
-            this.ExportToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.ExportToolStripMenuItem.Text = "&Export";
+            this.DeleteToolStripMenuItem.Click += new System.EventHandler(this.btndelete_Click);
             // 
             // ToolStripSeparator3
             // 
             this.ToolStripSeparator3.Name = "ToolStripSeparator3";
-            this.ToolStripSeparator3.Size = new System.Drawing.Size(170, 6);
+            this.ToolStripSeparator3.Size = new System.Drawing.Size(149, 6);
             // 
             // PrintToolStripMenuItem
             // 
             this.PrintToolStripMenuItem.Name = "PrintToolStripMenuItem";
             this.PrintToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.PrintToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.PrintToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.PrintToolStripMenuItem.Text = "&Print";
+            this.PrintToolStripMenuItem.Click += new System.EventHandler(this.btnPrint_Click);
             // 
             // ToolStripSeparator1
             // 
             this.ToolStripSeparator1.Name = "ToolStripSeparator1";
-            this.ToolStripSeparator1.Size = new System.Drawing.Size(170, 6);
+            this.ToolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // ExitToolStripMenuItem1
             // 
             this.ExitToolStripMenuItem1.Name = "ExitToolStripMenuItem1";
-            this.ExitToolStripMenuItem1.Size = new System.Drawing.Size(173, 22);
+            this.ExitToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.ExitToolStripMenuItem1.Text = "Exit";
             // 
             // EditToolStripMenuItem
@@ -217,14 +201,14 @@
             // ToolStripBiodata
             // 
             this.ToolStripBiodata.Name = "ToolStripBiodata";
-            this.ToolStripBiodata.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripBiodata.Size = new System.Drawing.Size(116, 22);
             this.ToolStripBiodata.Text = "&Biodata";
             this.ToolStripBiodata.Click += new System.EventHandler(this.Biodata_Click);
             // 
             // ToolStripIDCard
             // 
             this.ToolStripIDCard.Name = "ToolStripIDCard";
-            this.ToolStripIDCard.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripIDCard.Size = new System.Drawing.Size(116, 22);
             this.ToolStripIDCard.Text = "&I D Card";
             this.ToolStripIDCard.Click += new System.EventHandler(this.iDCard_Click);
             // 
@@ -389,8 +373,6 @@
         protected internal System.Windows.Forms.ToolStripMenuItem NewToolStripMenuItem;
         protected internal System.Windows.Forms.ToolStripMenuItem ModifyToolStripMenuItem;
         protected internal System.Windows.Forms.ToolStripMenuItem DeleteToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripMenuItem ImportToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripMenuItem ExportToolStripMenuItem;
         internal System.Windows.Forms.ToolStripSeparator ToolStripSeparator3;
         protected internal System.Windows.Forms.ToolStripMenuItem PrintToolStripMenuItem;
         protected internal System.Windows.Forms.ToolStripSeparator ToolStripSeparator1;

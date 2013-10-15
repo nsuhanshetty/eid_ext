@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data;
 
-namespace eid   
+namespace eid
 {
     class Common
     {
@@ -70,42 +70,42 @@ namespace eid
         {
             foreach (Control ctrol in controls.Controls)
             {
-                switch (ctrol.Name.Substring(0,3).ToLower())
+                switch (ctrol.Name.Substring(0, 3).ToLower())
                 {
                     case "txt":
                         if (ctrol.Text != "")
                             return true;
                         break;
                 }
-               
+
                 if (Recurse)
                 {
                     switch (ctrol.Name.Substring(0, 3).ToLower())
                     {
                         case "tab":
                             TabPage tp = (TabPage)ctrol;
-                            if(controlisinedit(tp, Recurse)==true)
+                            if (controlisinedit(tp, Recurse) == true)
                                 return true;
                             break;
 
                         case "pnl":
                             Panel pnl = (Panel)ctrol;
-                            if(controlisinedit(pnl, Recurse)==true)
+                            if (controlisinedit(pnl, Recurse) == true)
                                 return true;
                             break;
                         case "grp":
                             GroupBox grbx = (GroupBox)ctrol;
-                            if(controlisinedit(grbx, Recurse)==true)
+                            if (controlisinedit(grbx, Recurse) == true)
                                 return true;
                             break;
                     }
                 }
-            }      
+            }
             //else
-            return false;    
+            return false;
         }
 
-        public string qrytime(String qry, string  str = "")
+        public string qrytime(String qry, string str = "")
         {
             if (qry == "ins")
                 return "'" + User.UserId + "','" + DateTime.Now.Date.ToString("yyyy/MM/dd") + " " + DateTime.Now.ToString("HH:mm:ss") + "'";
@@ -114,7 +114,7 @@ namespace eid
                 return str + "MODIFIED_BY='" + User.UserId + "'," + str + "MODIFIED_ON='" + DateTime.Now.Date.ToString("yyyy/MM/dd") + " " + DateTime.Now.ToString("HH:mm:ss") + "'";
             else
                 return null;
-         }
+        }
 
         /// <summary>
         /// checks if the container sent has any controls with no value
@@ -123,25 +123,25 @@ namespace eid
         /// <param name="Recurse">true -> if control has parent container else false </param>
         /// <param name="ExceptionControl">it consists the name of control that has to be treated as an exception by default it has</param>
         /// <returns></returns>
-        public bool isempty(Control container, Boolean Recurse,List<string> ExceptionControl=null)
-        {          
+        public bool isempty(Control container, Boolean Recurse, List<string> ExceptionControl = null)
+        {
             foreach (Control ctrol in container.Controls)
             {
-                if((ctrol is TextBox || ctrol is RichTextBox) &&(!ExceptionControl.Contains(ctrol.Name)))
+                if ((ctrol is TextBox || ctrol is RichTextBox) && (!ExceptionControl.Contains(ctrol.Name)))
                 {
                     //if (c.Text == "")
-                    if(string.IsNullOrEmpty(ctrol.Text))
+                    if (string.IsNullOrEmpty(ctrol.Text))
                     {
                         MessageBox.Show("Textbox " + ctrol.Name + " is empty." + Environment.NewLine + "Please try again.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ctrol.Focus();
                         return true;
-                    }   
+                    }
                 }
                 if (ctrol is PictureBox)
                 {
-                    if (((PictureBox)ctrol).Image==null)
+                    if (((PictureBox)ctrol).Image == null)
                     {
-                        MessageBox.Show("Employee Image is Mandatory and cannot be empty." + Environment.NewLine + "Please insert and try again.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);                        
+                        MessageBox.Show("Employee Image is Mandatory and cannot be empty." + Environment.NewLine + "Please insert and try again.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return true;
                     }
                 }
@@ -151,19 +151,19 @@ namespace eid
                     {
                         case "tab":
                             TabPage tp = (TabPage)ctrol;
-                            if(isempty(tp, Recurse, ExceptionControl)==true)
+                            if (isempty(tp, Recurse, ExceptionControl) == true)
                                 return true;
                             break;
 
                         case "pnl":
                             Panel pnl = (Panel)ctrol;
-                            if(isempty(pnl, Recurse, ExceptionControl)==true)
+                            if (isempty(pnl, Recurse, ExceptionControl) == true)
                                 return true;
                             break;
 
                         case "grb":
                             GroupBox grbx = (GroupBox)ctrol;
-                            if(isempty(grbx, Recurse, ExceptionControl)==true)
+                            if (isempty(grbx, Recurse, ExceptionControl) == true)
                                 return true;
                             break;
                     }
@@ -262,8 +262,7 @@ namespace eid
                 }
             }
         }
-
         #endregion 'PublicMethods
-    }       
+    }
 
 }

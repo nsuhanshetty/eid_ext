@@ -136,6 +136,8 @@ namespace eid
 
             lblMessage.Text = "Double Click the Username to delete the User.";
 
+            //make text red
+
             //load the datagrid with checkboxes
             LoadDGV();
         }
@@ -188,24 +190,14 @@ namespace eid
                     Dest_Image_ImagePath = transfer_Images(val);
 
                     qry = "insert into employee_proof(EP_EMP_NO, EP_EMP_PIC, EP_EMP_DOB_PROOF, EP_EMP_PER_ADDRESS_PROOF, EP_EMP_PRES_ADDRESS_PROOF, EP_EMP_EDU_QUAL_PROOF,EP_EMP_NOCHILD_PROOF,EP_EMP_OTHR_QUAL_PROOF) values ('" + txtEmpNo.Text + "',";
-                    /*+DestPath[0].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "','" + DestPath[1].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "','" + DestPath[2].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "','" + DestPath[3].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "','" + DestPath[4].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
-                    */
+
                     for (int i = 0; i < Dest_Image_ImagePath.Length - 2; i++)
-                    {
                         qry += "'" + Dest_Image_ImagePath[i].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
-                    }
 
-
-                    if ((rdbMarried.Checked == true) && (!string.IsNullOrEmpty(txtNoOfChildProof.Text)))
-                        qry += "'" + Dest_Image_ImagePath[6].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
-                    else
-                        qry += "NULL,";
+                    qry += ((rdbMarried.Checked == true) && (!string.IsNullOrEmpty(txtNoOfChildProof.Text))) ? "'" + Dest_Image_ImagePath[6].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "'," : "NULL,";
 
                     qry += (string.IsNullOrEmpty(txtOthrQualProof.Text) == false) ? "'" + Dest_Image_ImagePath[5].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "')" : "NULL)";
-
                     MysqlConn.executeQry(qry);
-
-
                 }
             }
             else
@@ -232,13 +224,9 @@ namespace eid
 
                     string[] updsource = { "EP_EMP_PIC", "EP_EMP_DOB_PROOF", "EP_EMP_PER_ADDRESS_PROOF", "EP_EMP_PRES_ADDRESS_PROOF", "EP_EMP_EDU_QUAL_PROOF" };
 
-                    // qry = "update employee_proof set EP_EMP_PIC='" + DestPath[0].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_DOB_PROOF='" + DestPath[1].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_PER_ADDRESS_PROOF='" + DestPath[2].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_PRES_ADDRESS_PROOF='" + DestPath[3].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',EP_EMP_EDU_QUAL_PROOF='" + DestPath[4].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
-
                     qry = "update employee_proof set ";
                     for (int i = 0; i < Dest_Image_ImagePath.Length - 2; i++)
-                    {
                         qry += "" + updsource[i] + "='" + Dest_Image_ImagePath[i].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
-                    }
 
                     if ((rdbMarried.Checked) && (!string.IsNullOrEmpty(txtNoOfChildProof.Text)))
                         qry += "EP_EMP_NOCHILD_PROOF='" + Dest_Image_ImagePath[6].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
@@ -249,11 +237,9 @@ namespace eid
                     qry += " where EP_EMP_NO='" + txtEmpNo.Text + "'";
                     MysqlConn.executeQry(qry);
                 }
-
                 txtEmpNo.Enabled = true;
                 UpdateState = false;
             }
-
             //clear the form
             com.clearcontrol(tabControl1, true);
             txtEmpNo.Focus();
@@ -364,7 +350,6 @@ namespace eid
                         txtOthrQualProof.Text = OfdDob.FileName;
                         OthrQualext = Path.GetExtension(OfdDob.FileName);
                         break;
-
                 }
         }
 
@@ -394,15 +379,6 @@ namespace eid
             //load the datagrid
             qry = "select ER_EMP_NO, ER_EMP_NAME from employee_registry where ER_DELETED='N'";
             dt = MysqlConn.getDataTable(qry);
-
-            /* ACTIVATE IF A CHECK BOX IS REQUIRED
-            if (DeleteState)
-            {
-                //adding combobox to datatable
-                dt.Columns.Add(new DataColumn("Selected", typeof(bool)));
-                dt.Columns["Selected"].SetOrdinal(1);
-            }
-            */
 
             dt.Columns.Add("EMPLOYEE_ID");
             for (int i = 0; i <= dt.Rows.Count - 1; i++)
@@ -503,8 +479,6 @@ namespace eid
             //add employee number and name to text box
             txtEmpNo.Text = Convert.ToString(dgvView[1, e.RowIndex].Value);
             txtName.Text = Convert.ToString(dgvView[2, e.RowIndex].Value);
-
-            //  qry = "select * from employee_registry where ER_EMP_NO='" + txtEmpNo.Text + "' union select * from employee_proof where ER_EMP_NO='" +txtEmpNo.Text + "'";
 
             qry = "select * from employee_registry as er,employee_proof as ep where ER_EMP_NO='" + txtEmpNo.Text + "' AND er.ER_EMP_NO=ep.EP_EMP_NO";
             myReader = MysqlConn.GetSQLDataReader(qry);
