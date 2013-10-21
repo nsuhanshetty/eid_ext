@@ -55,7 +55,7 @@
             // 
             // txtpasswd
             // 
-            this.txtpasswd.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtpasswd.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtpasswd.Location = new System.Drawing.Point(121, 74);
             this.txtpasswd.Name = "txtpasswd";
             this.txtpasswd.PasswordChar = '*';
@@ -64,7 +64,7 @@
             // 
             // txtusernm
             // 
-            this.txtusernm.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtusernm.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtusernm.Location = new System.Drawing.Point(121, 39);
             this.txtusernm.Name = "txtusernm";
             this.txtusernm.Size = new System.Drawing.Size(333, 30);

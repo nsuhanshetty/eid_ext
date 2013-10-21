@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
-using CrystalDecisions.CrystalReports.Engine;
 //using eid.Report;
 using Microsoft.Reporting.WinForms;
 
@@ -49,8 +48,7 @@ namespace eid
             {
                 this.Cursor = Cursors.WaitCursor;
                 btnPrint.Enabled = false;
-
-                ReportDocument rptDoc = new ReportDocument();
+              
                 dsBiodata ds = new dsBiodata();
                 DataTable dt = new DataTable();
                 ReportDataSource rptDataSource;

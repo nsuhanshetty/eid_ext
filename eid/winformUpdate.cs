@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
@@ -22,21 +23,47 @@ namespace eid
 
         private void winformUpdate_Load(object sender, EventArgs e)
         {
+            checkIfFileExist(Application.StartupPath + "\\UpdateVersionLog.zip");
+
             #region download the File from server
             Network network = new Network();
-            network.DownloadFile("http://kayakkitchen.com/privateeye/UpdateLog.zip", Application.StartupPath + "\\UpdateLog.zip");
+            try
+            {
+                network.DownloadFile("http://kayakkitchen.com/privateeye/UpdateVersionLog.zip", Application.StartupPath + "\\UpdateVersionLog.zip");
+            }
+            catch (Exception ex)
+            {
+                ErrorDump er = new ErrorDump();
+                er.WriteToErrorLog(ErrorDump.ErrorDumpErrorLogType.Critical, ex, "Unable to Download the UpdateVersionLog File");
+            }
             #endregion download the File from server
+           
+            string updateVersionLogPath = Application.StartupPath + "\\updateVersionLog";
+
+            #region Create_updateVersionLogPath_Directory_ifNotExist
+            if (!Directory.Exists(updateVersionLogPath))
+                Directory.CreateDirectory(updateVersionLogPath);
+            #endregion Create_updateVersionLogPath_Directory_ifNotExist                        
+            
+            checkIfFileExist(updateVersionLogPath + "\\updateVersionLog.xml");
 
             #region unzip the file
-            string updatePath = Application.StartupPath + "//updateVersionLog";
-            ZipFile.ExtractToDirectory(Application.StartupPath + "//updateVersionLog.zip", updatePath);
-            File.Delete(updatePath);
+            try
+            {
+                ZipFile.ExtractToDirectory(Application.StartupPath + "\\UpdateVersionLog.zip", updateVersionLogPath);
+            }
+            catch (Exception ex)
+            {
+                ErrorDump er = new ErrorDump();
+                er.WriteToErrorLog(ErrorDump.ErrorDumpErrorLogType.Critical, ex, "Unable to Extract the UpdateVersionLog File");
+            }
+            File.Delete(Application.StartupPath + "\\UpdateVersionLog.zip");
             #endregion unzip the file
 
             #region compare current version are equal to server versions
-            string appVersion = readXmlValue(Application.StartupPath + "//appversion.xml");
+            string appVersion = ConfigurationManager.AppSettings["Version"];
             lblVersion.Text = "Version: " + appVersion;
-            serverVersion = readXmlValue(Application.StartupPath + "//updateVersionLog//updateVersionLog.xml");
+            serverVersion = readXmlValue(Application.StartupPath + "\\updateVersionLog\\updateVersionLog.xml");
 
             if (appVersion == serverVersion)
             {
@@ -50,6 +77,13 @@ namespace eid
             }
             #endregion
         }
+
+        private void checkIfFileExist(string Path)
+        {
+            if (File.Exists(Path))
+                File.Delete(Path);
+        }
+
 
         private string readXmlValue(string Path)
         {
@@ -66,27 +100,41 @@ namespace eid
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            Process.Start(Application.StartupPath + "\\updater.exe");
+            checkIfFileExist(Application.StartupPath + "\\UpdateExeFile.zip");
+
+            #region download the Update File from server
+            Network network = new Network();
+            try
+            {
+                network.DownloadFile("http://kayakkitchen.com/privateeye/UpdateExeFile.zip", Application.StartupPath + "\\UpdateExeFile.zip");
+            }
+            catch (Exception ex)
+            {
+                ErrorDump er = new ErrorDump();
+                er.WriteToErrorLog(ErrorDump.ErrorDumpErrorLogType.Critical, ex, "Unable to Download the Update File");
+            }
+            #endregion download the Update File from server
 
             #region writeupdated Version No.
-            XmlDocument xmlDoc = new XmlDocument();
-            using (FileStream fsWriteXml = new FileStream(Application.StartupPath + "//appversion.xml", System.IO.FileMode.Open))
-            {
-                xmlDoc.Load(fsWriteXml);
-                XmlNodeList nodeList = xmlDoc.SelectNodes("/updateLog/Version");
-                nodeList[0].InnerXml = "0.0.0.3";// serverVersion;    
-            }
-            xmlDoc.Save(Application.StartupPath + "//appversion.xml");
+            XmlDocument xml = new XmlDocument();
+            xml.Load(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
+            Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+            config.AppSettings.Settings.Remove("Version");
+            config.AppSettings.Settings.Add("Version", serverVersion);
+            config.Save(ConfigurationSaveMode.Minimal);
+            xml.Save(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
+            ConfigurationManager.RefreshSection("appSettings");
+
             #endregion writeupdated Version No.
 
-            File.Delete(Application.StartupPath + "//updateVersionLog//updateVersionLog.xml");
-
-            mailUpdateLog(serverVersion);
+            File.Delete(Application.StartupPath + "\\updateVersionLog\\updateVersionLog.xml");
+            Process.Start(Application.StartupPath + "\\updateHelper.exe");            
+            mailUpdateConfirmation(serverVersion);
 
             Application.Exit();
         }
 
-        private void mailUpdateLog(string version)  
+        private void mailUpdateConfirmation(string version)
         {
             try
             {
@@ -96,7 +144,7 @@ namespace eid
                 message.From = new MailAddress("nsuhanshetty@gmail.com");
                 message.To.Add(new MailAddress("nsuhanshetty@gmail.com"));
                 message.Subject = "Secusys-EID Update Confirmation";
-                message.Body = "Secusys_EID updated to Version " + version + " taken by User Id " + User.UserId + " at "+ DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") +".";
+                message.Body = "Secusys_EID updated to Version " + version + " taken by User Id " + User.UserId + " at " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + ".";
 
                 smtp.Port = 587;
                 smtp.Host = "smtp.gmail.com";

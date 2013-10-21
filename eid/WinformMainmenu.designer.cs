@@ -46,7 +46,6 @@
             this.HelptoolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.UpdatetoolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            this.AbouttoolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.Exitmenu = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStrip1 = new System.Windows.Forms.ToolStrip();
             this.Loginbtn = new System.Windows.Forms.ToolStripButton();
@@ -162,8 +161,7 @@
             // 
             this.HelptoolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.UpdatetoolStripMenuItem2,
-            this.toolStripSeparator12,
-            this.AbouttoolStripMenuItem3});
+            this.toolStripSeparator12});
             this.HelptoolStripMenuItem1.Name = "HelptoolStripMenuItem1";
             this.HelptoolStripMenuItem1.Size = new System.Drawing.Size(44, 20);
             this.HelptoolStripMenuItem1.Text = "&Help";
@@ -183,20 +181,12 @@
             this.toolStripSeparator12.Name = "toolStripSeparator12";
             this.toolStripSeparator12.Size = new System.Drawing.Size(171, 6);
             // 
-            // AbouttoolStripMenuItem3
-            // 
-            this.AbouttoolStripMenuItem3.Image = ((System.Drawing.Image)(resources.GetObject("AbouttoolStripMenuItem3.Image")));
-            this.AbouttoolStripMenuItem3.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.AbouttoolStripMenuItem3.Name = "AbouttoolStripMenuItem3";
-            this.AbouttoolStripMenuItem3.Size = new System.Drawing.Size(174, 38);
-            this.AbouttoolStripMenuItem3.Text = "&About...";
-            this.AbouttoolStripMenuItem3.Click += new System.EventHandler(this.AboutustoolStripMenuItem3_Click);
-            // 
             // Exitmenu
             // 
             this.Exitmenu.Name = "Exitmenu";
             this.Exitmenu.Size = new System.Drawing.Size(37, 20);
             this.Exitmenu.Text = "&Exit";
+            this.Exitmenu.Click += new System.EventHandler(this.Exitmenu_Click);
             // 
             // ToolStrip1
             // 
@@ -261,7 +251,6 @@
         internal System.Windows.Forms.ToolStripMenuItem HelptoolStripMenuItem1;
         internal System.Windows.Forms.ToolStripMenuItem UpdatetoolStripMenuItem2;
         internal System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
-        internal System.Windows.Forms.ToolStripMenuItem AbouttoolStripMenuItem3;
         internal System.Windows.Forms.ToolStripMenuItem Exitmenu;
         internal System.Windows.Forms.ToolStrip ToolStrip1;
         internal System.Windows.Forms.ToolStripButton Loginbtn;

@@ -174,5 +174,10 @@ namespace eid
             winformUpdate wfUpdate = new winformUpdate();
             wfUpdate.ShowDialog();
         }
+
+        private void Exitmenu_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

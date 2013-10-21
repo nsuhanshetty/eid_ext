@@ -5,17 +5,20 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using eid.Models;
+using eid.Savers;
 
 namespace eid
 {
     public partial class WinformEmpReg : WinformAbstract
     {
         #region 'PropertiesAndVariables
-        string qry = "", EmpPicext = ".JPG", DOBext, NOChildext, PermAddext, PresAddext, EduQualext, OthrQualext;
+        string EmpPicext = ".JPG", DOBext, NOChildext, PermAddext, PresAddext, EduQualext, OthrQualext;
 
         Common com = new Common();
         ErrorDump ed = new ErrorDump();
         DataTable dt = new DataTable();
+        StaffModel staffmodel = new StaffModel();
 
         MySql.Data.MySqlClient.MySqlDataReader myReader = null;
 
@@ -122,8 +125,8 @@ namespace eid
             this.pnlUsrView.Visible = true;
             txtEmpNo.Enabled = false;
 
-            lblMessage.Text = "Double Click the Employee Name to Modify the Employee Details.";
-
+            lblMessage.Text = "Double Click the Employee Name to MODIFY the Employee Details.";
+            lblMessage.ForeColor = Color.Black;
             LoadDGV();
         }
 
@@ -134,9 +137,8 @@ namespace eid
             this.tabControl1.Visible = false;
             this.pnlUsrView.Visible = true;
 
-            lblMessage.Text = "Double Click the Username to delete the User.";
-
-            //make text red
+            lblMessage.Text = "Double Click the Username to DELETE the Staff.";
+            lblMessage.ForeColor = Color.Red;
 
             //load the datagrid with checkboxes
             LoadDGV();
@@ -144,6 +146,7 @@ namespace eid
 
         protected override void btnsave_Click(object sender, EventArgs e)
         {
+            StaffDetailsSavers staffSaver = new StaffDetailsSavers();
             string[] Dest_Image_ImagePath = { };
 
             if (rdbSingle.Checked == false && rdbMarried.Checked == false)
@@ -188,16 +191,7 @@ namespace eid
                         com.clearcontrol(grbMarital, true);
 
                     Dest_Image_ImagePath = transfer_Images(val);
-
-                    qry = "insert into employee_proof(EP_EMP_NO, EP_EMP_PIC, EP_EMP_DOB_PROOF, EP_EMP_PER_ADDRESS_PROOF, EP_EMP_PRES_ADDRESS_PROOF, EP_EMP_EDU_QUAL_PROOF,EP_EMP_NOCHILD_PROOF,EP_EMP_OTHR_QUAL_PROOF) values ('" + txtEmpNo.Text + "',";
-
-                    for (int i = 0; i < Dest_Image_ImagePath.Length - 2; i++)
-                        qry += "'" + Dest_Image_ImagePath[i].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
-
-                    qry += ((rdbMarried.Checked == true) && (!string.IsNullOrEmpty(txtNoOfChildProof.Text))) ? "'" + Dest_Image_ImagePath[6].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "'," : "NULL,";
-
-                    qry += (string.IsNullOrEmpty(txtOthrQualProof.Text) == false) ? "'" + Dest_Image_ImagePath[5].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "')" : "NULL)";
-                    MysqlConn.executeQry(qry);
+                    staffSaver.saveStaffProof(Dest_Image_ImagePath, txtEmpNo.Text, rdbMarried.Checked, (!string.IsNullOrEmpty(txtNoOfChildProof.Text)), string.IsNullOrEmpty(txtOthrQualProof.Text));
                 }
             }
             else
@@ -211,31 +205,19 @@ namespace eid
                     dict.Add(StrocProcKey[i], StroProcVal[i]);
                 }
 
-                if (MysqlConn.dictionaryToTable(dict, "update_Emp_Details") >= 1)
+                if (staffSaver.saveUpdateDetails(dict) >= 1)
                 {
                     // make grpMarital empty
                     if (rdbSingle.Checked == true)
                         com.clearcontrol(grbMarital, true);
-
 
                     Dest_Image_ImagePath = transfer_Images(val);
                     if (Path.GetExtension(Dest_Image_ImagePath[0]) == "")
                         Dest_Image_ImagePath[0] = Dest_Image_ImagePath[0] + ".jpg";
 
                     string[] updsource = { "EP_EMP_PIC", "EP_EMP_DOB_PROOF", "EP_EMP_PER_ADDRESS_PROOF", "EP_EMP_PRES_ADDRESS_PROOF", "EP_EMP_EDU_QUAL_PROOF" };
+                    staffSaver.saveStaffProof(updsource, Dest_Image_ImagePath, txtEmpNo.Text, rdbMarried.Checked, (!string.IsNullOrEmpty(txtNoOfChildProof.Text)), (!string.IsNullOrEmpty(txtOthrQualProof.Text)));
 
-                    qry = "update employee_proof set ";
-                    for (int i = 0; i < Dest_Image_ImagePath.Length - 2; i++)
-                        qry += "" + updsource[i] + "='" + Dest_Image_ImagePath[i].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
-
-                    if ((rdbMarried.Checked) && (!string.IsNullOrEmpty(txtNoOfChildProof.Text)))
-                        qry += "EP_EMP_NOCHILD_PROOF='" + Dest_Image_ImagePath[6].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
-                    else
-                        qry += "EP_EMP_NOCHILD_PROOF=NULL,";
-
-                    qry += (string.IsNullOrEmpty(txtOthrQualProof.Text) == false) ? "EP_EMP_OTHR_QUAL_PROOF='" + Dest_Image_ImagePath[5].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "'" : "EP_EMP_OTHR_QUAL_PROOF=NULL";
-                    qry += " where EP_EMP_NO='" + txtEmpNo.Text + "'";
-                    MysqlConn.executeQry(qry);
                 }
                 txtEmpNo.Enabled = true;
                 UpdateState = false;
@@ -247,16 +229,16 @@ namespace eid
 
         protected override void btncancel_Click(object sender, EventArgs e)
         {
-            //check if on edit
-            if (com.controlisinedit(tabControl1, true))
-            {
-                if (DialogResult.No == MessageBox.Show("Do you want to Exit", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-                    return;
+            ////check if on edit
+            //if (com.controlisinedit(tabControl1, true))
+            //{
+            //    if (DialogResult.No == MessageBox.Show("Do you want to Exit", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            //        return;
 
-                //if yes
-                com.clearcontrol(tabControl1, true);
-            }
-
+                //if yes              
+            //}
+            
+            com.clearcontrol(tabControl1, true);
             MenuMode(this, true);
             tabControl1.Visible = false;
         }
@@ -297,7 +279,6 @@ namespace eid
         {
             //updating the status bar
             updateStatus(this, "Entering the Employee Details....");
-
             com.isalpha_space(e);
         }
 
@@ -305,7 +286,6 @@ namespace eid
         {
             //updating the status bar
             updateStatus(this, "Entering the Employee Details....");
-
             com.isnumeric(e);
         }
 
@@ -362,8 +342,8 @@ namespace eid
 
             if (UpdateState != true)
             {
-                qry = "select count(*) from employee_registry where ER_EMP_NO='" + txtEmpNo.Text + "'";
-                if (Convert.ToInt16(MysqlConn.returnFirstCell(qry)) != 0)
+                StaffDetailsSavers staffSaver = new StaffDetailsSavers();
+                if (Convert.ToInt16(staffSaver.fetchStaffCount(txtEmpNo.Text)) != 0)
                 {
                     MessageBox.Show("Employee Number already exists." + Environment.NewLine + "Please enter a different number", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txtEmpNo.Text = "";
@@ -376,9 +356,8 @@ namespace eid
         #region ViewModule_Methods
         private void LoadDGV()
         {
-            //load the datagrid
-            qry = "select ER_EMP_NO, ER_EMP_NAME from employee_registry where ER_DELETED='N'";
-            dt = MysqlConn.getDataTable(qry);
+            StaffDetailsSavers staffSaver = new StaffDetailsSavers(); ;
+            dt = staffSaver.getStaffDetails();
 
             dt.Columns.Add("EMPLOYEE_ID");
             for (int i = 0; i <= dt.Rows.Count - 1; i++)
@@ -390,27 +369,16 @@ namespace eid
             this.dgvView.DataSource = dt.DefaultView;
             dgvView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            //If delete state is active then 2 else 1
-            //int x = DeleteState ? 2 : 1;
-            // dgvView.Columns[0].HeaderText = "EMPLOYEE_ID";
             dgvView.Columns[1].HeaderText = "EMPLOYEE_NO";
             dgvView.Columns[2].HeaderText = "EMPLOYEE_NAME";
         }
 
         private void txtlSrchEmpName_TextChanged(object sender, EventArgs e)
         {
-            //load the datagrid
-            qry = "select  ER_EMP_NO as EMPLOYEE_NO,ER_EMP_NAME as EMPLOYEE_NAME from employee_registry where ER_DELETED='N' ";
+            StaffDetailsSavers staffDetails = new StaffDetailsSavers();
+            dt = staffDetails.getSearchDetails(txtSrchEmpName.Text, txtSrchEmpNo.Text);
 
-            //the following loops work for both txtempname and txtempno 
-            //to search among the datagridview
-            if (!string.IsNullOrEmpty(txtSrchEmpName.Text))
-                qry += "and ER_EMP_NAME like '" + txtSrchEmpName.Text + "%'";
-            if (!string.IsNullOrEmpty(txtSrchEmpNo.Text))
-                qry += "and ER_EMP_NO like '" + txtSrchEmpNo.Text + "%'";
-
-            dt = MysqlConn.getDataTable(qry);
-
+            #region load the datagrid
             dt.Columns.Add("EMPLOYEE_ID");
             for (int i = 0; i <= dt.Rows.Count - 1; i++)
             {
@@ -424,33 +392,26 @@ namespace eid
 
             this.dgvView.DataSource = dt.DefaultView;
             dgvView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            #endregion load the datagrid
         }
 
         private void dgvView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             DialogResult dr;
+            StaffDetailsSavers staffSavers= new StaffDetailsSavers();
+            string empNo = Convert.ToString(dgvView.Rows[e.RowIndex].Cells["ER_EMP_NO"].Value);
 
             # region DeleteUser
             if (DeleteState)
             {
-                //get the row no.
-                //convert the dgv cell to dgvcheckbox cell and 
-                //check if selected / checked
-                // DataGridViewCheckBoxCell chkbx = (DataGridViewCheckBoxCell)dgvView.Rows[e.RowIndex].Cells["Selected"];
-                //if (chkbx.Selected)
-                //{
                 dr = MessageBox.Show("Do you want to delete the details of Employee " + Convert.ToString(dgvView.Rows[e.RowIndex].Cells["ER_EMP_NAME"].Value), "Delete User", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                 if (dr == DialogResult.No)
                 {
                     return;
                 }
 
-                //delete user
-                qry = "update employee_registry set ER_DELETED = 'Y' where ER_EMP_NO='" + Convert.ToString(dgvView.Rows[e.RowIndex].Cells["ER_EMP_NO"].Value) + "'";
-                MysqlConn.executeQry(qry);
-
-                qry = "update employee_proof set EP_DELETED = 'Y' where EP_EMP_NO='" + Convert.ToString(dgvView.Rows[e.RowIndex].Cells["ER_EMP_NO"].Value) + "'";
-                MysqlConn.executeQry(qry);
+                staffSavers.deleteStaffDetails(empNo);
+                staffSavers.deleteStaffProof(empNo);
 
                 updateStatus(this, "User Deleted");
                 LoadDGV();
@@ -469,7 +430,6 @@ namespace eid
             # endregion PrintUser
 
             # region Modify/User
-            // on modify
             dr = MessageBox.Show("Do you want to Modify the details of Employee " + Convert.ToString(dgvView.Rows[e.RowIndex].Cells[2].Value), "Modify Employee Details", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
             if (dr == DialogResult.No)
             {
@@ -480,9 +440,7 @@ namespace eid
             txtEmpNo.Text = Convert.ToString(dgvView[1, e.RowIndex].Value);
             txtName.Text = Convert.ToString(dgvView[2, e.RowIndex].Value);
 
-            qry = "select * from employee_registry as er,employee_proof as ep where ER_EMP_NO='" + txtEmpNo.Text + "' AND er.ER_EMP_NO=ep.EP_EMP_NO";
-            myReader = MysqlConn.GetSQLDataReader(qry);
-
+            myReader = staffSavers.fetchStaffDetails(txtEmpNo.Text);
             while (myReader.Read())
             {
                 txtFthrName.Text = (myReader["ER_FATHER_NAME"].ToString());
@@ -619,7 +577,7 @@ namespace eid
         private string[] transfer_Images(string val)
         {
             //when image is captured and not uploaded.
-            if (pcbEmpImage.ImageLocation == null || pcbEmpImage.Image != null || File.Exists(pcbEmpImage.ImageLocation))
+            if (pcbEmpImage.ImageLocation == null || pcbEmpImage.Image != null || !File.Exists(pcbEmpImage.ImageLocation))
             {
                 pcbEmpImage.Image.Save(EmpPicPath + "\\_EmpPicPath_" + val + "" + ".jpg");
                 pcbEmpImage.ImageLocation = EmpPicPath + "\\_EmpPicPath_" + val + "" + ".jpg";

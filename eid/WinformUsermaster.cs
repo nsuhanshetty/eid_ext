@@ -57,8 +57,7 @@ namespace eid
         private void WinformUsermaster_Load(object sender, EventArgs e)
         {
             btnPrint.Visible = false;
-            
-           // LOADCHECKBX();
+                      
             pnlUsrNew.Visible = false;
             pnlUsrView.Visible = false;
 
@@ -88,7 +87,7 @@ namespace eid
             this.pnlUsrView.Visible = true;         
             
             lblMessage.Text = "Double Click the Username to Modify the User Privleges.";
-                        
+            lblMessage.ForeColor = Color.Black;            
             LoadDGV();
         }
 
@@ -99,8 +98,8 @@ namespace eid
             this.pnlUsrNew.Visible = false;
             this.pnlUsrView.Visible = true;           
             
-            lblMessage.Text = "Double Click the Username to delete the User.";
-            
+            lblMessage.Text = "Double Click the Username to DELETE the User.";
+            lblMessage.ForeColor = Color.Red;
             //load the datagrid with checkboxes
             LoadDGV();
         }
