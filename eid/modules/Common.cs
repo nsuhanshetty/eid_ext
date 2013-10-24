@@ -10,7 +10,7 @@ namespace eid
     class Common
     {
         #region 'PublicMethods
-        public void clearcontrol(Control container, Boolean Recurse)
+        public void clearAllControl(Control container, Boolean Recurse)
         {
             foreach (Control ctrol in container.Controls)
             {
@@ -49,17 +49,17 @@ namespace eid
                     {
                         case "tab":
                             TabPage tp = (TabPage)ctrol;
-                            clearcontrol(tp, Recurse);
+                            clearAllControl(tp, Recurse);
                             break;
 
                         case "pnl":
                             Panel pnl = (Panel)ctrol;
-                            clearcontrol(pnl, Recurse);
+                            clearAllControl(pnl, Recurse);
                             break;
 
                         case "grb":
                             GroupBox grbx = (GroupBox)ctrol;
-                            clearcontrol(grbx, Recurse);
+                            clearAllControl(grbx, Recurse);
                             break;
                     }
                 }

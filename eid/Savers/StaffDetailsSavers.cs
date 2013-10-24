@@ -52,19 +52,21 @@ namespace eid.Savers
 
         public void saveStaffProof(string[] Dest_Image_ImagePath, string empNo, bool marriedStatus, bool childProof, bool othrQualProof)
         {
-            string qry = "insert into employee_proof(EP_EMP_NO, EP_EMP_PIC, EP_EMP_DOB_PROOF, EP_EMP_PER_ADDRESS_PROOF, EP_EMP_PRES_ADDRESS_PROOF, EP_EMP_EDU_QUAL_PROOF,EP_EMP_NOCHILD_PROOF,EP_EMP_OTHR_QUAL_PROOF) values ('" + empNo + "',";
+            Common common = new Common();
+            string qry = "insert into employee_proof(EP_EMP_NO, EP_EMP_PIC, EP_EMP_DOB_PROOF, EP_EMP_PER_ADDRESS_PROOF, EP_EMP_PRES_ADDRESS_PROOF, EP_EMP_EDU_QUAL_PROOF,EP_EMP_NOCHILD_PROOF,EP_EMP_OTHR_QUAL_PROOF,EP_EMP_CREATED_BY,EP_EMP_CREATED_ON) values ('" + empNo + "',";
 
             for (int i = 0; i < Dest_Image_ImagePath.Length - 2; i++)
                 qry += "'" + Dest_Image_ImagePath[i].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
 
             qry += ((marriedStatus) && (childProof)) ? "'" + Dest_Image_ImagePath[6].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "'," : "NULL,";
-            qry += (!othrQualProof) ? "'" + Dest_Image_ImagePath[5].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "')" : "NULL)";
+            qry += (!othrQualProof) ? "'" + Dest_Image_ImagePath[5].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "')" : "NULL),";
+            qry += common.qrytime("ins", "EP_EMP_");
             MysqlConn.executeQry(qry);
-
         }
 
         public void saveStaffProof(string[] source, string[] Dest_Image_ImagePath, string empNo, bool marriedStatus, bool childProof, bool othrQualProof)
         {
+            Common common = new Common();
             string qry = "update employee_proof set ";
             for (int i = 0; i < Dest_Image_ImagePath.Length - 2; i++)
                 qry += "" + source[i] + "='" + Dest_Image_ImagePath[i].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "',";
@@ -74,10 +76,10 @@ namespace eid.Savers
             else
                 qry += "EP_EMP_NOCHILD_PROOF=NULL,";
 
-            qry += (!othrQualProof) ? "EP_EMP_OTHR_QUAL_PROOF='" + Dest_Image_ImagePath[5].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "'" : "EP_EMP_OTHR_QUAL_PROOF=NULL";
+            qry += (!othrQualProof) ? "EP_EMP_OTHR_QUAL_PROOF='" + Dest_Image_ImagePath[5].Replace("\\", "\\\\\\").Replace("\\\\\\b", "\\\\b") + "'" : "EP_EMP_OTHR_QUAL_PROOF=NULL ,";
+            qry += common.qrytime("upd", "EP_EMP_");
             qry += " where EP_EMP_NO='" + empNo + "'";
             MysqlConn.executeQry(qry);
-            /*shift to saver*/
         }
 
         public object fetchStaffCount(string empNo)
@@ -88,7 +90,7 @@ namespace eid.Savers
 
         public int saveUpdateDetails(Dictionary<String, Object> dict)
         {
-           return MysqlConn.dictionaryToTable(dict, "update_Emp_Details");
+            return MysqlConn.dictionaryToTable(dict, "update_Emp_Details");
         }
     }
 }

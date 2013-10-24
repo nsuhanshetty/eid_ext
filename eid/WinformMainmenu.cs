@@ -167,7 +167,6 @@ namespace eid
             else
                 MessageBox.Show("No Values Found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
-        #endregion 'PrivateMethods
 
         private void UpdatetoolStripMenuItem2_Click(object sender, EventArgs e)
         {
@@ -179,5 +178,8 @@ namespace eid
         {
             Application.Exit();
         }
+        #endregion 'PrivateMethods
+
+ 
     }
 }

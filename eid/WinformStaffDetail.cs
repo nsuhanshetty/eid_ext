@@ -188,7 +188,7 @@ namespace eid
                     updateStatus(this, "Values Saved");
 
                     if (rdbSingle.Checked == true)
-                        com.clearcontrol(grbMarital, true);
+                        com.clearAllControl(grbMarital, true);
 
                     Dest_Image_ImagePath = transfer_Images(val);
                     staffSaver.saveStaffProof(Dest_Image_ImagePath, txtEmpNo.Text, rdbMarried.Checked, (!string.IsNullOrEmpty(txtNoOfChildProof.Text)), string.IsNullOrEmpty(txtOthrQualProof.Text));
@@ -209,7 +209,7 @@ namespace eid
                 {
                     // make grpMarital empty
                     if (rdbSingle.Checked == true)
-                        com.clearcontrol(grbMarital, true);
+                        com.clearAllControl(grbMarital, true);
 
                     Dest_Image_ImagePath = transfer_Images(val);
                     if (Path.GetExtension(Dest_Image_ImagePath[0]) == "")
@@ -223,22 +223,13 @@ namespace eid
                 UpdateState = false;
             }
             //clear the form
-            com.clearcontrol(tabControl1, true);
+            com.clearAllControl(tabControl1, true);
             txtEmpNo.Focus();
         }
 
         protected override void btncancel_Click(object sender, EventArgs e)
-        {
-            ////check if on edit
-            //if (com.controlisinedit(tabControl1, true))
-            //{
-            //    if (DialogResult.No == MessageBox.Show("Do you want to Exit", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-            //        return;
-
-                //if yes              
-            //}
-            
-            com.clearcontrol(tabControl1, true);
+        {   
+            com.clearAllControl(tabControl1, true);
             MenuMode(this, true);
             tabControl1.Visible = false;
         }

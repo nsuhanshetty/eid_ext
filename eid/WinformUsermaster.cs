@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using eid.Savers;
 
 namespace eid
 {
@@ -13,12 +14,12 @@ namespace eid
     {
         # region 'PropertiesAndVariables
 
-        string qry ="";
-        Common com = new Common();      
+        string qry = "";
+        Common com = new Common();
         DataTable dt = new DataTable();
         //MysqlConn objData = new MysqlConn();
         WinformAbstract wfAbs = new WinformAbstract();
-        WinformMainmenu wfMain = new WinformMainmenu();                                               
+        WinformMainmenu wfMain = new WinformMainmenu();
 
         private bool mdelete;
         private bool DeleteState
@@ -45,7 +46,7 @@ namespace eid
                 _update = value;
             }
         }
-    # endregion 'PropertiesAndVariables
+        # endregion 'PropertiesAndVariables
 
         public WinformUsermaster()
         {
@@ -57,7 +58,7 @@ namespace eid
         private void WinformUsermaster_Load(object sender, EventArgs e)
         {
             btnPrint.Visible = false;
-                      
+
             pnlUsrNew.Visible = false;
             pnlUsrView.Visible = false;
 
@@ -73,9 +74,9 @@ namespace eid
             this.pnlUsrNew.Visible = true;
             this.GrbxNewUser.Enabled = true;
             this.pnlUsrView.Visible = false;
-            
+
             //all the checkbox are checked
-            LoadCheckBox("");
+            LoadUserPrivileges_CheckBox("");
         }
 
         protected override void btnmodify_Click(object sender, EventArgs e)
@@ -84,10 +85,10 @@ namespace eid
             DeleteState = false;
             txtSrchUserName.Text = "";
             this.pnlUsrNew.Visible = false;
-            this.pnlUsrView.Visible = true;         
-            
+            this.pnlUsrView.Visible = true;
+
             lblMessage.Text = "Double Click the Username to Modify the User Privleges.";
-            lblMessage.ForeColor = Color.Black;            
+            lblMessage.ForeColor = Color.Black;
             LoadDGV();
         }
 
@@ -96,24 +97,25 @@ namespace eid
             DeleteState = true;
             txtSrchUserName.Text = "";
             this.pnlUsrNew.Visible = false;
-            this.pnlUsrView.Visible = true;           
-            
+            this.pnlUsrView.Visible = true;
+
             lblMessage.Text = "Double Click the Username to DELETE the User.";
             lblMessage.ForeColor = Color.Red;
-            //load the datagrid with checkboxes
             LoadDGV();
         }
 
         protected override void btnsave_Click(object sender, EventArgs e)
         {
-            //Check if textbox null or empty
+            UserMasterSaver userMasterSaver = new UserMasterSaver();
+            int USPUserid;
+
             if (string.IsNullOrEmpty(txtUsrname.Text) || string.IsNullOrEmpty(txtPass.Text) || string.IsNullOrEmpty(txtConPass.Text))
             {
                 MessageBox.Show("Username and Password are Mandatory." + Environment.NewLine + "Please try again.", "Incorrect Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            //check if pass and con pass match
+            #region check if pass and con pass match
             if (string.Compare(txtConPass.Text, txtPass.Text) != 0)
             {
                 MessageBox.Show("Password and Confirm Password do not match." + Environment.NewLine + "Please try again.", "Incorrect Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -122,69 +124,64 @@ namespace eid
                 txtUsrname.Text = string.Empty;
                 txtConPass.Text = string.Empty;
                 return;
-            }           
+            }
+            #endregion check if pass and con pass match
 
-
-                if (UpdateState != true)
+            #region InsertUserPrivileges
+            if (UpdateState != true)
+            {
+                try
                 {
-                    //save user into DB
-                    qry = "insert into userprivilege(USPUSERNAME,USPPASSWORD,USPCREATEDBY,USPCREATEDON)values('" + txtUsrname.Text + "','" + txtPass.Text + "','" + User.UserId + "','" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
-                    MysqlConn.executeQry(qry);
 
-                    qry = "Select USPUSERID from userprivilege where USPUSERNAME='" + txtUsrname.Text + "'";
-                    int USPUserid = (int)MysqlConn.returnFirstCell(qry);
-
-                    //save userAttribute into DB
-                    for (int i = 0; i< this.chklstbx.Items.Count; i++)
-                    {
-                        qry = "insert into user_attribute(UA_user_id,UA_menu,UA_enable,UA_CREATEDBY,UA_CREATEDON)values('" + USPUserid + "','" + i + "','" + Convert.ToInt16(this.chklstbx.GetItemChecked(i)) + "'," + com.qrytime("ins") + ")";
-                        MysqlConn.executeQry(qry);
-                        //status bar value inserted                   
-                    }
-                }
-
-                else
-                //for updates
-                //save user into DB
-                {
-                    qry = "Select USPUSERID from userprivilege where USPUSERNAME='" + txtUsrname.Text + "'";
-                    int USPUserid = (int)MysqlConn.returnFirstCell(qry);
-
-                    qry = "update userprivilege set USPMODIFIEDBY='" + User.UserId + "',USPMODIFIEDON='" + DateTime.Now.ToString("yyyy-MM-dd") + "' where USPUSERID='" + USPUserid + "'";
-                    MysqlConn.executeQry(qry);
+                    userMasterSaver.insertUserPrivileges(txtUsrname.Text, txtPass.Text);
+                    USPUserid = userMasterSaver.fetchEmpID(txtUsrname.Text);
                     for (int i = 0; i < this.chklstbx.Items.Count; i++)
                     {
-                        qry = "update user_attribute set UA_enable='" + Convert.ToInt16(this.chklstbx.GetItemChecked(i)) + "'," + com.qrytime("upd", "UA_") +
-                            " where  UA_user_id='" + USPUserid + "' and UA_menu='" + i + "'";
-                        MysqlConn.executeQry(qry);
+                        userMasterSaver.insertUserAttribute(USPUserid, i, Convert.ToInt16(this.chklstbx.GetItemChecked(i)));
                     }
-                    txtPass.Enabled = true;
-                    txtConPass.Enabled = true;
-                    UpdateState = false;
-                    //Status Bar values are updated.
                 }
+                catch (Exception ex)
+                {
+                    ErrorDump ed = new ErrorDump();
+                    ed.WriteToErrorLog(ErrorDump.ErrorDumpErrorLogType.Information, ex, "Saving UserMaster Failed. Please try again");
+                }
+            }
+            #endregion InsertUserPrivileges            
+            else
+            #region updateUserPrivilege
+            {
+                USPUserid = userMasterSaver.fetchEmpID(txtUsrname.Text);
+                userMasterSaver.updateUserPrivilege(USPUserid);
+                for (int i = 0; i < this.chklstbx.Items.Count; i++)
+                {
+                    userMasterSaver.updateUserAttribute(USPUserid, Convert.ToInt16(this.chklstbx.GetItemChecked(i)), i);
+                    MysqlConn.executeQry(qry);
+                }
+                txtPass.Enabled = true;
+                txtConPass.Enabled = true;
+                UpdateState = false;
+            }
+            #endregion updateUserPrivilege
 
-            //Accessing the Status bar in Winform Abstract (Parent)                         
-            updateStatus(this,"Values Saved");
+            updateStatus(this, "Values Saved");
 
-            //Clear all Controls After Save
-            com.clearcontrol(GrbxNewUser, false);
-            LoadCheckBox("");
+            com.clearAllControl(GrbxNewUser, false);
+            LoadUserPrivileges_CheckBox("");
             txtUsrname.Focus();
         }
 
         protected override void btncancel_Click(object sender, EventArgs e)
         {
             //check if on edit
-            if (com.controlisinedit(GrbxNewUser,false))
+            if (com.controlisinedit(GrbxNewUser, false))
             {
-                DialogResult dr = MessageBox.Show("Do you want to Exit","Exit",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+                DialogResult dr = MessageBox.Show("Do you want to Exit", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.No)
-                {                    
+                {
                     return;
                 }
                 //if yes
-                com.clearcontrol(GrbxNewUser, true);
+                com.clearAllControl(GrbxNewUser, true);
             }
 
             MenuMode(this, true);
@@ -222,7 +219,7 @@ namespace eid
             dgvView.Columns[1].HeaderText = "NAME";
         }
 
-        private void LoadCheckBox(string rcvid)
+        private void LoadUserPrivileges_CheckBox(string rcvid)
         {
             int count = 0, menuno = 0;
             chklstbx.ColumnWidth = 350;
@@ -245,7 +242,7 @@ namespace eid
             {
                 if (count < 2)
                 {
-                    count ++;
+                    count++;
 
                     foreach (ToolStripMenuItem subitem in item.DropDownItems.OfType<ToolStripMenuItem>())
                     {
@@ -307,8 +304,8 @@ namespace eid
             updateStatus(this, "Waiting for User's Input....");
 
             if (string.IsNullOrEmpty(txtUsrname.Text))
-                 return;
-            
+                return;
+
             //Check if Username already exists
             qry = "select USPUSERNAME from userprivilege where USPUSERNAME = '" + txtUsrname + "'";
             if (MysqlConn.returnFirstCell(qry) != null)
@@ -344,43 +341,43 @@ namespace eid
                 //get the row no.
                 //convert the dgv cell to dgvcheckbox cell and 
                 //check if selected / checked
-               // DataGridViewCheckBoxCell chkbx = (DataGridViewCheckBoxCell)dgvView.Rows[e.RowIndex].Cells["Selected"];
+                // DataGridViewCheckBoxCell chkbx = (DataGridViewCheckBoxCell)dgvView.Rows[e.RowIndex].Cells["Selected"];
                 //if (chkbx.Selected)
                 //{
-                    dr = MessageBox.Show("Do you want to delete User " + Convert.ToString(dgvView.Rows[e.RowIndex].Cells["USPUSERNAME"].Value), "Delete User", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                    if (dr == DialogResult.No)
-                    {
-                        return;
-                    }
+                dr = MessageBox.Show("Do you want to delete User " + Convert.ToString(dgvView.Rows[e.RowIndex].Cells["USPUSERNAME"].Value), "Delete User", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                if (dr == DialogResult.No)
+                {
+                    return;
+                }
 
-                    //delete user
-                    qry = "update userprivilege set USPdeleted = 'Y' where USPUSERID='" + Convert.ToString(dgvView.Rows[e.RowIndex].Cells["USPUSERID"].Value) + "'";
-                    MysqlConn.executeQry(qry);
-                    updateStatus(this, "User Deleted");
-                    LoadDGV();
+                //delete user
+                qry = "update userprivilege set USPdeleted = 'Y' where USPUSERID='" + Convert.ToString(dgvView.Rows[e.RowIndex].Cells["USPUSERID"].Value) + "'";
+                MysqlConn.executeQry(qry);
+                updateStatus(this, "User Deleted");
+                LoadDGV();
                 //}
                 return;
-            }                      
-            
+            }
+
             // on modify
-             dr = MessageBox.Show("Do you want to Modify User " + Convert.ToString(dgvView.Rows[e.RowIndex].Cells["USPUSERNAME"].Value), "Delete User", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-             if (dr == DialogResult.No)
-             {
-                 return;
-             }
+            dr = MessageBox.Show("Do you want to Modify User " + Convert.ToString(dgvView.Rows[e.RowIndex].Cells["USPUSERNAME"].Value), "Delete User", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            if (dr == DialogResult.No)
+            {
+                return;
+            }
 
             //add username to text box
-            txtUsrname.Text=Convert.ToString(dgvView[1, e.RowIndex].Value);
+            txtUsrname.Text = Convert.ToString(dgvView[1, e.RowIndex].Value);
 
             qry = "select USPPASSWORD from userprivilege where USPUSERNAME='" + txtUsrname.Text + "'";
             txtConPass.Text = (string)MysqlConn.returnFirstCell(qry);
             txtConPass.Enabled = false;
             txtPass.Text = txtConPass.Text;
             txtPass.Enabled = false;
-            
+
             //select the userid and loadCheckBox
-            LoadCheckBox(Convert.ToString(dgvView[0, e.RowIndex].Value));             
-            
+            LoadUserPrivileges_CheckBox(Convert.ToString(dgvView[0, e.RowIndex].Value));
+
             //menustate close
             MenuMode(this, false);
 
