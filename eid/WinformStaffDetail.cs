@@ -342,6 +342,7 @@ namespace eid
                 }
             }
         }
+
         #endregion ValidationMethods
 
         #region ViewModule_Methods
@@ -366,8 +367,8 @@ namespace eid
 
         private void txtlSrchEmpName_TextChanged(object sender, EventArgs e)
         {
-            StaffDetailsSavers staffDetails = new StaffDetailsSavers();
-            dt = staffDetails.getSearchDetails(txtSrchEmpName.Text, txtSrchEmpNo.Text);
+            StaffDetailsSavers staffDetailsSavers = new StaffDetailsSavers();
+            dt = staffDetailsSavers.getSearchDetails(txtSrchEmpName.Text, txtSrchEmpNo.Text);
 
             #region load the datagrid
             dt.Columns.Add("EMPLOYEE_ID");

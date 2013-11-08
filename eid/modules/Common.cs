@@ -245,6 +245,14 @@ namespace eid
             return e.Handled;
         }
 
+        public static string FirstCharToUpper(string input)
+        {
+            if (String.IsNullOrEmpty(input))
+                return System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(input.ToLower());
+            else
+                return "";
+        }
+
         public void cleartext(Control.ControlCollection controls)
         {
             int i = 0;

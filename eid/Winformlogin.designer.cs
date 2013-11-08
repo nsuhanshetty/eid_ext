@@ -36,10 +36,10 @@
             this.lblpasswd = new System.Windows.Forms.Label();
             this.btncncl = new System.Windows.Forms.Button();
             this.btnsubmit = new System.Windows.Forms.Button();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolstrplbl = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pcbkey)).BeginInit();
-            this.statusStrip1.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // pcbkey
@@ -115,15 +115,15 @@
             this.btnsubmit.UseVisualStyleBackColor = true;
             this.btnsubmit.Click += new System.EventHandler(this.btnsubmit_Click);
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolstrplbl});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 176);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(533, 22);
-            this.statusStrip1.TabIndex = 52;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip.Location = new System.Drawing.Point(0, 176);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(533, 22);
+            this.statusStrip.TabIndex = 52;
+            this.statusStrip.Text = "statusStrip1";
             // 
             // toolstrplbl
             // 
@@ -138,7 +138,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btncncl;
             this.ClientSize = new System.Drawing.Size(533, 198);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.pcbkey);
             this.Controls.Add(this.txtpasswd);
             this.Controls.Add(this.txtusernm);
@@ -152,8 +152,8 @@
             this.Text = "LOGIN";
             this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.pcbkey)).EndInit();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -168,7 +168,7 @@
         internal System.Windows.Forms.Label lblpasswd;
         internal System.Windows.Forms.Button btncncl;
         internal System.Windows.Forms.Button btnsubmit;
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolstrplbl;
     }
 }

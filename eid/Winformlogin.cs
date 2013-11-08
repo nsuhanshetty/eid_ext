@@ -23,14 +23,11 @@ namespace eid
             this.wfMain = wfmain;
         }
 
-
         int no_rows = 0;
         string qry = "";
         Object userId = null;
         int index = 0;
         int menuno = 0;
-
-
         WinformMainmenu wfMain = new WinformMainmenu();
 
         # endregion 'ConstructorsAndPrivateVariables
@@ -48,14 +45,14 @@ namespace eid
             UserMasterSaver userMasterSaver = new UserMasterSaver();
             LogSaver logsaver = new LogSaver();
 
-            statusStrip1.Text = "Authenticating..";
+            statusStrip.Text = "Authenticating..";
             Cursor.Current = Cursors.WaitCursor;
 
             #region compare txt and db values
             if (string.IsNullOrEmpty(txtusernm.Text) || string.IsNullOrEmpty(txtpasswd.Text))
             {
                 MessageBox.Show("Username and Password are Mandatory." + Environment.NewLine + "Please try again.", "Incorrect Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                statusStrip1.Text = "Waiting for User's input...";
+                statusStrip.Text = "Waiting for User's input...";
                 return;
             }
             else
@@ -64,7 +61,7 @@ namespace eid
                 if (userId == null)
                 {
                     MessageBox.Show("Username / Password is Incorrect." + Environment.NewLine + "Please try again.", "Incorrect Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    statusStrip1.Text = "Waiting for User's input...";
+                    statusStrip.Text = "Waiting for User's input...";
                     disableMenu();
                     return;
                 }

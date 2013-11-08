@@ -86,11 +86,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="abstract.cs">
+    <Compile Include="WinformAbstract.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="abstract.designer.cs">
-      <DependentUpon>abstract.cs</DependentUpon>
+    <Compile Include="WinformAbstract.designer.cs">
+      <DependentUpon>WinformAbstract.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\User.cs" />
     <Compile Include="dsBiodata.cs">
@@ -109,6 +109,7 @@
     <Compile Include="Modules\MysqlConn.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Savers\LogSaver.cs" />
     <Compile Include="Savers\StaffDetailsSavers.cs" />
     <Compile Include="Savers\UserMasterSaver.cs" />
     <Compile Include="WinformBranch.cs">
@@ -165,8 +166,8 @@
     <Compile Include="WinformWebcam.designer.cs">
       <DependentUpon>WinformWebcam.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="abstract.resx">
-      <DependentUpon>abstract.cs</DependentUpon>
+    <EmbeddedResource Include="WinformAbstract.resx">
+      <DependentUpon>WinformAbstract.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
